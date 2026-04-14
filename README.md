@@ -20,4 +20,4 @@
 
 Mi repositorio:
    ```bash
-   git clone [https://github.com/TU_USUARIO/computacion-grafica.git](https://github.com/TU_USUARIO/computacion-grafica.git)
+   git clone [https://github.com/Patiencie/ComputacionGrafica.git)

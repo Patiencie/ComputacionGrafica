@@ -1,10 +1,6 @@
 # Computación Gráfica | Portafolio de Proyectos
 
-<p align="center">
-  <img src="path/to/your/image_0.png" alt="Banner de Computación Gráfica con GPU y Texto" width="100%">
-</p>
-
-¡Bienvenido! Este repositorio contiene todos los trabajos, laboratorios y proyectos desarrollados durante el curso de **Computación Gráfica**. Aquí documento mi progreso en la implementación de algoritmos visuales, renderizado y manipulación de gráficos por computadora.
+¡Bienvenido! Este repositorio contiene todos los trabajos y proyectos desarrollados durante el curso de **Computación Gráfica**. Aquí documento mis trabajos visuales, renderizado y manipulación de gráficos por computadora.
 
 ---
 

@@ -18,9 +18,6 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Unity](https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white)
 
----
-1. Clona el repositorio:
-   ```bash
-   git clone [https://github.com/Patiencie/ComputacionGrafica.git)
+git clone [https://github.com/Patiencie/ComputacionGrafica.git)
 
    

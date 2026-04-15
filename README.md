@@ -8,7 +8,6 @@
 * **Nombre:** Jhon Anderson Quispe Mamani
 * **Carrera:** Ingeniería de Sistemas e Informática
 * **Institución:** Universidad Tecnológica de los Andes (UTEA)
-* **Especialidad:** Desarrollo de Sistemas e Infraestructura Cloud
 
 ---
 

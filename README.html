@@ -1,24 +1,142 @@
-# Computación Gráfica | Portafolio de Proyectos
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio - Computación Gráfica</title>
 
-¡Bienvenido! Este repositorio contiene todos los trabajos y proyectos desarrollados durante el curso de **Computación Gráfica**. Aquí documento mis trabajos visuales, renderizado y manipulación de gráficos por computadora.
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
 
----
+/* CONTENEDOR PRINCIPAL */
+.contenedor {
+    width: 85%;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.7);
+}
 
-## 👤 Información del Estudiante
-* **Nombre:** Jhon Anderson Quispe Mamani
-* **Carrera:** Ingeniería de Sistemas e Informática
-* **Institución:** Universidad Tecnológica de los Andes (UTEA)
+/* TITULOS */
+h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
 
----
+h2 {
+    text-align: center;
+    color: #00c6ff;
+}
 
-## 🚀 Herramientas
-![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
-![OpenGL](https://img.shields.io/badge/OpenGL-FFFFFF?style=for-the-badge&logo=opengl&logoColor=blue)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Unity](https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white)
+/* INFO */
+.info {
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-[🔗 Ejercicio 1 Circulo](Ejercicio1_Circulo.html)
-[🔗 Ejercicio 2 Cuadrado y Triangulo](Ejercicio2_CuadradoTriangulo.html)
-[🔗 Ejercicio 3 Gráfico Barras](Ejercicio3_GraficoBarras.html)
-[🔗 Ejercicio Gráfico Lineal](Ejercicio5_GraficoLinealD.html)
+/* GRID DE PROYECTOS */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
 
+/* TARJETAS */
+.card {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    background: rgba(255,255,255,0.2);
+}
+
+/* BOTONES */
+.boton {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #00c6ff;
+    color: black;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.boton:hover {
+    background: #0072ff;
+    color: white;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <h1>💻 Computación Gráfica</h1>
+    <h2>Portafolio de Proyectos</h2>
+
+    <div class="info">
+        <p><b>👤 Jhon Anderson Quispe Mamani</b></p>
+        <p>🎓 Ingeniería de Sistemas e Informática</p>
+        <p>🏫 UTEA</p>
+    </div>
+
+    <h2>🚀 Proyectos</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>🟢 Círculo</h3>
+            <p>Dibujo de un círculo en canvas</p>
+            <a href="Ejercicio1_Circulo.html" class="boton">Ver</a>
+        </div>
+
+        <div class="card">
+            <h3>🔺 Cuadrado y Triángulo</h3>
+            <p>Figuras geométricas básicas</p>
+            <a href="Ejercicio2_CuadradoTriangulo.html" class="boton">Ver</a>
+        </div>
+
+        <div class="card">
+            <h3>📊 Gráfico de Barras</h3>
+            <p>Visualización de datos</p>
+            <a href="Ejercicio3_GraficoBarras.html" class="boton">Ver</a>
+        </div>
+
+        <div class="card">
+            <h3>📈 Gráfico Lineal</h3>
+            <p>Representación de funciones</p>
+            <a href="Ejercicio5_GraficoLinealD.html" class="boton">Ver</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 - Portafolio de Computación Gráfica</p>
+    </footer>
+
+</div>
+
+</body>
+</html>

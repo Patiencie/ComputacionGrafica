@@ -1,38 +1,30 @@
-# Computación Gráfica | Portafolio de Proyectos
+# 🎨 Computación Gráfica | Portafolio de Proyectos
 
-¡Bienvenido! Este repositorio contiene todos los trabajos y proyectos desarrollados durante el curso de **Computación Gráfica**. Aquí documento mis trabajos visuales, renderizado y manipulación de gráficos por computadora.
-
----
-
-## 👤 Información del Estudiante
-* **Nombre:** Jhon Anderson Quispe Mamani
-* **Carrera:** Ingeniería de Sistemas e Informática
-* **Institución:** Universidad Tecnológica de los Andes (UTEA)
-
----
-## 🚀 Herramientas
-![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
-![OpenGL](https://img.shields.io/badge/OpenGL-FFFFFF?style=for-the-badge&logo=opengl&logoColor=blue)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Unity](https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white)
-
+> [!IMPORTANT]
+> **Estudiante:** Jhon Anderson Quispe Mamani | **Carrera:** Ingeniería de Sistemas (UTEA)
 
 ---
 
-## 🚀 Galería de Proyectos
-
-[🔗 Ejercicio 1 Circulo](Ejercicio1_Circulo.html) |
-[🔗 Ejercicio 2 Cuadrado y Triangulo](Ejercicio2_CuadradoTriangulo.html) |
-[🔗 Ejercicio 3 Gráfico Barras](Ejercicio3_GraficoBarras.html) |
-[🔗 Ejercicio 4 Función Matemática](Ejercicio4_FuncionMatematica.html) |
-[🔗 Ejercicio 5 Gráfico Lineal](Ejercicio5_GraficoLinealD.html) |
+<div align="center">
+  <img src="https://via.placeholder.com/800x100/00599C/FFFFFF?text=PORTAFOLIO+DE+COMPUTACION+GRAFICA" alt="Banner">
+</div>
 
 ---
 
+### 🛠️ Stack Tecnológico
+| Lenguaje | Gráficos | Herramienta |
+| :---: | :---: | :---: |
+| ![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white) | ![OpenGL](https://img.shields.io/badge/OpenGL-5586A4?style=for-the-badge&logo=opengl&logoColor=white) | ![Unity](https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white) |
 
-```diff
-+ Este bloque aparecerá con un fondo verde suave, ideal para destacar logros.
-- Este bloque aparecerá con un fondo rojo/rosado suave.
-! Este bloque suele aparecer en naranja/amarillo en algunos visualizadores.
+---
 
+### 🚀 Galería de Proyectos
+| Ejercicio | Descripción | Enlace |
+| :--- | :--- | :--- |
+| **🔵 Círculo** | Algoritmos de generación de circunferencias. | [🔗 Ver](Ejercicio1_Circulo.html) |
+| **📐 Polígonos** | Cuadrado y Triángulo (Vértices). | [🔗 Ver](Ejercicio2_CuadradoTriangulo.html) |
 
+---
+
+> [!TIP]
+> **Dato Técnico:** Todos los proyectos están optimizados para ejecutarse en sistemas con soporte para OpenGL 3.3+.

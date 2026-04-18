@@ -18,3 +18,6 @@
 ![Unity](https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white)
 
 [🔗 Computación Gráfica](https://github.com/Patiencie/ComputacionGrafica.git)
+
+[🔗 Computación Gráfica](Ejercicio5_GraficoLinealD.html)
+

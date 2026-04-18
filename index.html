@@ -1,82 +1,155 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Computación Gráfica | Portafolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio - Computación Gráfica</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-        }
+<style>
+/* FONDO GENERAL */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #e2e8f0;
+}
 
-        h1, h2 {
-            text-align: center;
-        }
+/* CONTENEDOR PRINCIPAL */
+.contenedor {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px;
+    background: rgba(15, 23, 42, 0.85);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
+}
 
-        h1 {
-            font-size: 35px;
-        }
+/* TITULOS */
+h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #f8fafc;
+}
 
-        p {
-            text-align: center;
-        }
+h2 {
+    text-align: center;
+    color: #38bdf8;
+    margin-bottom: 25px;
+}
 
-        /* Contenedor */
-        .contenido {
-            width: 80%;
-            margin: 30px auto;
-        }
+/* INFO */
+.info {
+    text-align: center;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
 
-        /* Links estilo botón */
-        a {
-            display: block;
-            width: fit-content;
-            margin: 10px auto;
-            padding: 8px 15px;
-            text-decoration: none;
-            color: white;
-            background: rgba(255,255,255,0.15);
-            border-radius: 8px;
-            transition: 0.3s;
-            font-weight: bold;
-        }
+/* SEPARADOR */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #38bdf8, transparent);
+    margin: 30px 0;
+}
 
-        a:hover {
-            background: #00c6ff;
-            color: black;
-        }
+/* LISTA DE PROYECTOS */
+.lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-        /* Separador */
-        hr {
-            border: 1px solid rgba(255,255,255,0.3);
-            width: 60%;
-        }
-    </style>
+/* ITEMS */
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    padding: 15px 20px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.item:hover {
+    background: rgba(56,189,248,0.15);
+    transform: translateX(5px);
+}
+
+/* TEXTO */
+.item span {
+    font-size: 16px;
+}
+
+/* BOTONES */
+.boton {
+    text-decoration: none;
+    background: #38bdf8;
+    color: #0f172a;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.boton:hover {
+    background: #0ea5e9;
+    color: white;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    opacity: 0.6;
+}
+</style>
 </head>
 
 <body>
 
-<div class="contenido">
+<div class="contenedor">
 
-    <h1>💻 Computación Gráfica | Portafolio de Proyectos</h1>
+    <h1>💻 Computación Gráfica</h1>
+    <h2>Portafolio de Proyectos</h2>
 
-    <h2>👤 Información del Estudiante</h2>
-
-    <p><b>Nombre:</b> Jhon Anderson Quispe Mamani</p>
-    <p><b>Carrera:</b> Ingeniería de Sistemas e Informática</p>
-    <p><b>Institución:</b> Universidad Tecnológica de los Andes (UTEA)</p>
+    <div class="info">
+        <p><strong>Jhon Anderson Quispe Mamani</strong></p>
+        <p>Ingeniería de Sistemas e Informática</p>
+        <p>Universidad Tecnológica de los Andes (UTEA)</p>
+    </div>
 
     <hr>
 
-    <h2>🚀 Ejercicios</h2>
+    <div class="lista">
 
-    <a href="Ejercicio1_Circulo.html">🔵 Ejercicio 1: Círculo</a>
-    <a href="Ejercicio2_CuadradoTriangulo.html">🔺 Ejercicio 2: Cuadrado y Triángulo</a>
-    <a href="Ejercicio3_GraficoBarras.html">📊 Ejercicio 3: Gráfico de Barras</a>
-    <a href="Ejercicio5_GraficoLinealD.html">📈 Ejercicio 4: Gráfico Lineal</a>
+        <div class="item">
+            <span>🔵 Ejercicio 1: Círculo</span>
+            <a href="Ejercicio1_Circulo.html" class="boton">Ver</a>
+        </div>
+
+        <div class="item">
+            <span>🔺 Ejercicio 2: Cuadrado y Triángulo</span>
+            <a href="Ejercicio2_CuadradoTriangulo.html" class="boton">Ver</a>
+        </div>
+
+        <div class="item">
+            <span>📊 Ejercicio 3: Gráfico de Barras</span>
+            <a href="Ejercicio3_GraficoBarras.html" class="boton">Ver</a>
+        </div>
+
+        <div class="item">
+            <span>📈 Ejercicio 4: Gráfico Lineal</span>
+            <a href="Ejercicio5_GraficoLinealD.html" class="boton">Ver</a>
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 - Portafolio de Computación Gráfica
+    </footer>
 
 </div>
 

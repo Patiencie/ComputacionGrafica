@@ -30,6 +30,9 @@
 ---
 
 
-
+```diff
++ Este bloque aparecerá con un fondo verde suave, ideal para destacar logros.
+- Este bloque aparecerá con un fondo rojo/rosado suave.
+! Este bloque suele aparecer en naranja/amarillo en algunos visualizadores.
 
 

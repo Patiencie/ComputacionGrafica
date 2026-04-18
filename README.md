@@ -18,7 +18,12 @@
 ![Unity](https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white)
 
 [🔗 Ejercicio 1 Circulo](Ejercicio1_Circulo.html)
+[🔗 Ejercicio 2 Cuadrado y Triangulo](Ejercicio2_CuadradoTriangulo.html)
+[🔗 Ejercicio 3 Gráfico Barras](Ejercicio3_GraficoBarras.html)
 [🔗 Ejercicio Gráfico Lineal](Ejercicio5_GraficoLinealD.html)
+
+
+
 
 
 

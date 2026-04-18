@@ -21,10 +21,11 @@
 
 ## 🚀 Galería de Proyectos
 
-[🔗 Ejercicio 1 Circulo](Ejercicio1_Circulo.html)
-[🔗 Ejercicio 2 Cuadrado y Triangulo](Ejercicio2_CuadradoTriangulo.html)
-[🔗 Ejercicio 3 Gráfico Barras](Ejercicio3_GraficoBarras.html)
-[🔗 Ejercicio Gráfico Lineal](Ejercicio5_GraficoLinealD.html)
+[🔗 Ejercicio 1 Circulo](Ejercicio1_Circulo.html) |
+[🔗 Ejercicio 2 Cuadrado y Triangulo](Ejercicio2_CuadradoTriangulo.html) |
+[🔗 Ejercicio 3 Gráfico Barras](Ejercicio3_GraficoBarras.html) |
+[🔗 Ejercicio 4 Función Matemática](Ejercicio4_FuncionMatematica.html) |
+[🔗 Ejercicio 5 Gráfico Lineal](Ejercicio5_GraficoLinealD.html) |
 
 ---
 

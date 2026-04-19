@@ -1,3 +1,4 @@
+💻 CÓDIGO COMPLETO CON PORTADA
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +7,7 @@
 <title>Portafolio - Computación Gráfica</title>
 
 <style>
-/* FONDO GENERAL */
+/* ===== FONDO GENERAL ===== */
 body {
     margin: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
@@ -14,7 +15,48 @@ body {
     color: #e2e8f0;
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* ===== PORTADA ===== */
+.portada {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9)),
+                url('https://images.unsplash.com/photo-1518770660439-4636190af475') center/cover;
+    text-align: center;
+    animation: fadeIn 2s ease;
+}
+
+.portada h1 {
+    font-size: 50px;
+    margin: 0;
+}
+
+.portada p {
+    font-size: 20px;
+    margin: 10px 0 30px;
+    opacity: 0.8;
+}
+
+/* BOTÓN PORTADA */
+.boton-portada {
+    padding: 12px 25px;
+    background: #38bdf8;
+    color: #0f172a;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.boton-portada:hover {
+    background: #0ea5e9;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* ===== CONTENEDOR ===== */
 .contenedor {
     max-width: 900px;
     margin: 50px auto;
@@ -26,32 +68,15 @@ body {
 }
 
 /* TITULOS */
-h1 {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 10px;
-    color: #f8fafc;
-}
-
 h2 {
     text-align: center;
     color: #38bdf8;
-    margin-bottom: 25px;
 }
 
 /* INFO */
 .info {
     text-align: center;
-    line-height: 1.8;
     margin-bottom: 30px;
-}
-
-/* SEPARADOR */
-hr {
-    border: none;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #38bdf8, transparent);
-    margin: 30px 0;
 }
 
 /* LISTA */
@@ -67,7 +92,7 @@ hr {
     justify-content: space-between;
     align-items: center;
     background: rgba(255,255,255,0.05);
-    padding: 15px 20px;
+    padding: 15px;
     border-radius: 10px;
     transition: 0.3s;
 }
@@ -77,20 +102,14 @@ hr {
     transform: translateX(5px);
 }
 
-/* TEXTO */
-.item span {
-    font-size: 16px;
-}
-
-/* BOTONES */
+/* BOTÓN */
 .boton {
-    text-decoration: none;
     background: #38bdf8;
     color: #0f172a;
     padding: 8px 14px;
+    text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
-    transition: 0.3s;
 }
 
 .boton:hover {
@@ -98,34 +117,43 @@ hr {
     color: white;
 }
 
-/* FOOTER */
-footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 14px;
-    opacity: 0.6;
+/* ANIMACIÓN */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* SEPARADOR */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #38bdf8, transparent);
+    margin: 30px 0;
 }
 </style>
 </head>
 
 <body>
 
-<div class="contenedor">
-
+<!-- ===== PORTADA ===== -->
+<section class="portada">
     <h1>💻 Computación Gráfica</h1>
-    <h2>Portafolio de Proyectos</h2>
+    <p>Portafolio de Proyectos</p>
+    <a href="#contenido" class="boton-portada">Ver Portafolio ↓</a>
+</section>
+
+<!-- ===== CONTENIDO ===== -->
+<div id="contenido" class="contenedor">
 
     <div class="info">
         <p><strong>Jhon Anderson Quispe Mamani</strong></p>
         <p>Ingeniería de Sistemas e Informática</p>
-        <p>Universidad Tecnológica de los Andes (UTEA)</p>
+        <p>UTEA</p>
     </div>
 
     <hr>
 
-    <!-- EJERCICIOS -->
     <h2>📘 Ejercicios de Clase</h2>
-
     <div class="lista">
 
         <div class="item">
@@ -134,22 +162,22 @@ footer {
         </div>
 
         <div class="item">
-            <span>🔺 Ejercicio 2: Cuadrado y Triángulo</span>
+            <span>🔺 Ejercicio 2</span>
             <a href="EjerciciosClase/Ejercicio2_CuadradoTriangulo.html" class="boton">Ver</a>
         </div>
 
         <div class="item">
-            <span>📊 Ejercicio 3: Gráfico de Barras</span>
+            <span>📊 Ejercicio 3</span>
             <a href="EjerciciosClase/Ejercicio3_GraficoBarras.html" class="boton">Ver</a>
         </div>
-        
+
         <div class="item">
-            <span>📈 Ejercicio 4: Función Matemática</span>
+            <span>📈 Ejercicio 4</span>
             <a href="EjerciciosClase/Ejercicio4_FuncionMatematica.html" class="boton">Ver</a>
         </div>
 
         <div class="item">
-            <span>📉 Ejercicio 5: Gráfico Lineal Dinámico</span>
+            <span>📉 Ejercicio 5</span>
             <a href="EjerciciosClase/Ejercicio5_GraficoLinealD.html" class="boton">Ver</a>
         </div>
 

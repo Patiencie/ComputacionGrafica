@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3: Curva Dinámica Coseno</title>
+    <style>
+        h2 { color: blue; text-align: center; }
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            background-color: #fdfdfd; 
+            margin-top: 30px;
+        }
+        canvas { 
+            background-color: white; 
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.1); 
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Ejercicio 3: Curva Dinámica de la Función Coseno</h2>
+    <h2>Realizado por Jhon Anderson Quispe Mamani</h2>
+
+    <canvas id="canvasCoseno" width="600" height="400" style="border:2px solid black;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("canvasCoseno");
+        var ctx = canvas.getContext("2d");
+
+        // Variable que aumentará con el tiempo para generar el movimiento
+        var desplazamiento = 0;
+
+        function dibujarCoseno() {
+            // 1. Limpiar el lienzo
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 2. Dibujar ejes referenciales
+            ctx.beginPath();
+            ctx.strokeStyle = "#bbb";
+            ctx.lineWidth = 1;
+            ctx.moveTo(0, 200); ctx.lineTo(600, 200); // Eje X (Centro)
+            ctx.moveTo(300, 0); ctx.lineTo(300, 400); // Eje Y (Centro)
+            ctx.stroke();
+
+            // 3. Dibujar la función Coseno
+            ctx.beginPath();
+            ctx.strokeStyle = "green";
+            ctx.lineWidth = 3;
+
+            // Recorremos el ancho del canvas (de 0 a 600)
+            for (var x = 0; x <= 600; x++) {
+                // Función: y = cos(x + desplazamiento)
+                // Ajustamos la escala: 
+                // (x / 30) para que la curva no sea tan cerrada
+                // * 80 para que la amplitud se note en el canvas
+                var y = Math.cos((x / 30) + desplazamiento) * 80;
+
+                // Dibujamos la línea. El "200" es para centrar verticalmente
+                if (x === 0) {
+                    ctx.moveTo(x, 200 - y);
+                } else {
+                    ctx.lineTo(x, 200 - y);
+                }
+            }
+            ctx.stroke();
+
+            // 4. Actualizar el desplazamiento para el siguiente cuadro
+            // Aumentar este valor cambia la velocidad del movimiento
+            desplazamiento += 0.1;
+        }
+
+        // Usamos setInterval para actualizar cada 50ms y que se vea fluido
+        // El ejercicio pide "cada segundo", pero para una curva suave 
+        // es mejor un intervalo menor. Si quieres estrictamente 1s, cambia 50 por 1000.
+        setInterval(dibujarCoseno, 50); 
+
+        // Llamada inicial
+        dibujarCoseno();
+    </script>
+    
+</body>
+</html>

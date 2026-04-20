@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 3: Curva Dinámica del Coseno</title>
+    <style>
+        h2 { color: blue; text-align: center; font-family: Arial, sans-serif; }
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            background-color: #f4f4f4; 
+            margin-top: 50px;
+        }
+        canvas { 
+            background-color: white; 
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2); 
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Ejercicio 3: Curva Dinámica de la Función Coseno</h2>
+    <h2>Realizado por Jhon Anderson Quispe Mamani</h2>
+
+    <canvas id="canvasCoseno" width="600" height="400" style="border:2px solid black;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("canvasCoseno");
+        var ctx = canvas.getContext("2d");
+
+        let desplazamientoX = 0; // Variable que hará que la curva se "mueva"
+
+        function dibujarCurva() {
+            // 1. Limpiar el lienzo
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 2. Dibujar Ejes de Referencia
+            ctx.beginPath();
+            ctx.strokeStyle = "#bbb";
+            ctx.moveTo(0, 200); ctx.lineTo(600, 200); // Eje X (Centro vertical)
+            ctx.stroke();
+
+            // 3. Configurar estilo de la línea de la función
+            ctx.beginPath();
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth = 2;
+
+            // 4. Calcular y dibujar los puntos de la función coseno
+            // Recorremos cada pixel del ancho del canvas (x)
+            for (let x = 0; x < canvas.width; x++) {
+                
+                /* Lógica Matemática:
+                   - (x + desplazamientoX): Hace que la onda avance.
+                   - / 20: Controla la frecuencia (qué tan estirada está la onda).
+                   - * 50: Controla la amplitud (qué tan alta es la onda).
+                   - + 200: Desplaza la onda al centro del canvas (Y=200).
+                */
+                let y = Math.cos((x + desplazamientoX) / 20) * 80 + 200;
+
+                if (x === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+
+            // 5. Mostrar indicador de avance (opcional)
+            ctx.fillStyle = "black";
+            ctx.font = "14px Arial";
+            ctx.fillText("Desplazamiento X: " + Math.round(desplazamientoX), 20, 30);
+
+            // Incrementar el desplazamiento para la siguiente animación
+            desplazamientoX += 5; 
+        }
+
+        // 6. Actualizar cada segundo (según pide tu ejercicio)
+        // pero el ejercicio pide explícitamente "cada segundo".
+        setInterval(dibujarCurva, 50);
+
+        // Llamada inicial
+        dibujarCurva();
+    </script>
+    
+</body>
+</html>

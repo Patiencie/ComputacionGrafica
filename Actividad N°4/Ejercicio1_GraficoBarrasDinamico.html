@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1: Gráfico de Barras Dinámico con Canvas</title>
+    <style>
+        h2 { color: blue; text-align: center; font-family: Arial, sans-serif; }
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            background-color: #f4f4f4; 
+            margin-top: 50px;
+        }
+        canvas { 
+            background-color: white; 
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2); 
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Ejercicio 1: Gráfico de Barras Dinámico</h2>
+    <h2>Realizado por Jhon Anderson Quispe Mamani</h2>
+
+    <canvas id="myCanvas" width="500" height="500" style="border:2px solid black;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        function dibujarGrafico() {
+            // 1. Limpiar el canvas en cada actualización
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 2. Dibujar los ejes (opcional, para mantener el estilo)
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            ctx.moveTo(50, 450); // Eje X
+            ctx.lineTo(450, 450);
+            ctx.moveTo(50, 50);  // Eje Y
+            ctx.lineTo(50, 450);
+            ctx.stroke();
+
+            // 3. Configuración de las barras
+            var numBarras = 5;
+            var anchoBarra = 50;
+            var espacio = 30;
+            var xInicial = 80;
+
+            for (var i = 0; i < numBarras; i++) {
+                // Generar valor aleatorio entre 10 y 100
+                var valor = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
+                
+                // Calcular altura proporcional (multiplicamos por 3 para que se vea mejor en el canvas de 500px)
+                var alturaBarra = valor * 3; 
+
+                // Dibujar la barra (Rectángulo)
+                // ctx.fillRect(x, y, ancho, alto)
+                // Restamos la altura de 450 para que "crezcan" desde el eje X hacia arriba
+                ctx.fillStyle = "red";
+                ctx.fillRect(xInicial + (i * (anchoBarra + espacio)), 450 - alturaBarra, anchoBarra, alturaBarra);
+
+                // Dibujar el valor numérico arriba de la barra
+                ctx.fillStyle = "green";
+                ctx.font = "16px Arial";
+                ctx.fillText(valor, xInicial + (i * (anchoBarra + espacio)) + 15, 440 - alturaBarra);
+            }
+        }
+
+        // Ejecutar la función cada 1 segundo
+        setInterval(dibujarGrafico, 1000);
+
+        // Llamada inicial
+        dibujarGrafico();
+    </script>
+    
+</body>
+</html>

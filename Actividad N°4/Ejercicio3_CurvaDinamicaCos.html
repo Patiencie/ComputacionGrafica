@@ -38,12 +38,17 @@
             // 2. Dibujar Ejes de Referencia
             ctx.beginPath();
             ctx.strokeStyle = "#bbb";
-            ctx.moveTo(0, 200); ctx.lineTo(600, 200); // Eje X (Centro vertical)
+            ctx.moveTo(0, 200); 
+            ctx.lineTo(600, 200); // Eje X (Centro vertical)
+            ctx.stroke();
+
+            ctx.moveTo(300, 0);
+            ctx.lineTo(300, 400);// Eje Y (Centro vertical) 
             ctx.stroke();
 
             // 3. Configurar estilo de la línea de la función
             ctx.beginPath();
-            ctx.strokeStyle = "red";
+            ctx.strokeStyle = "blue";
             ctx.lineWidth = 2;
 
             // 4. Calcular y dibujar los puntos de la función coseno
@@ -66,10 +71,12 @@
             }
             ctx.stroke();
 
+            
+
             // 5. Mostrar indicador de avance (opcional)
             ctx.fillStyle = "black";
             ctx.font = "14px Arial";
-            ctx.fillText("Desplazamiento X: " + Math.round(desplazamientoX), 20, 30);
+            ctx.fillText("Recorrido X: " + Math.round(desplazamientoX), 20, 30);
 
             // Incrementar el desplazamiento para la siguiente animación
             desplazamientoX += 5; 
@@ -77,7 +84,7 @@
 
         // 6. Actualizar cada segundo (según pide tu ejercicio)
         // pero el ejercicio pide explícitamente "cada segundo".
-        setInterval(dibujarCurva, 50);
+        setInterval(dibujarCurva, 60);
 
         // Llamada inicial
         dibujarCurva();

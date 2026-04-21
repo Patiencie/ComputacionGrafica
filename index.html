@@ -1,218 +1,73 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portafolio - Computación Gráfica</title>
-
-<style>
-/* ===== FONDO GENERAL ===== */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: #e2e8f0;
-}
-
-/* ===== PORTADA ===== */
-.portada {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9)),
-                url('https://images.unsplash.com/photo-1518770660439-4636190af475') center/cover;
-    text-align: center;
-    animation: fadeIn 2s ease;
-}
-
-.portada h1 {
-    font-size: 50px;
-    margin: 0;
-}
-
-.portada p {
-    font-size: 20px;
-    margin: 10px 0 30px;
-    opacity: 0.8;
-}
-
-/* BOTÓN PORTADA */
-.boton-portada {
-    padding: 12px 25px;
-    background: #38bdf8;
-    color: #0f172a;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.boton-portada:hover {
-    background: #0ea5e9;
-    color: white;
-    transform: scale(1.05);
-}
-
-/* ===== CONTENEDOR ===== */
-.contenedor {
-    max-width: 900px;
-    margin: 50px auto;
-    padding: 40px;
-    background: rgba(15, 23, 42, 0.85);
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    backdrop-filter: blur(10px);
-}
-
-/* TITULOS */
-h2 {
-    text-align: center;
-    color: #38bdf8;
-}
-
-/* INFO */
-.info {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-/* LISTA */
+/* ===== NUEVO ESTILO PARA LA LISTA DE EJERCICIOS ===== */
 .lista {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
-/* ITEMS */
+/* Ítems con efecto de cristal y borde sutil */
 .item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255,255,255,0.05);
-    padding: 15px;
-    border-radius: 10px;
-    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 18px 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(56, 189, 248, 0.1); /* Borde suave azul */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .item:hover {
-    background: rgba(56,189,248,0.15);
-    transform: translateX(5px);
+    background: rgba(56, 189, 248, 0.08);
+    transform: scale(1.02); /* Efecto de crecimiento */
+    border-color: #38bdf8;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
 }
 
-/* BOTÓN */
+/* Texto de los ítems */
+.item span {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #f1f5f9;
+}
+
+/* ===== BOTÓN REDISEÑADO (MÁS LLAMATIVO) ===== */
 .boton {
-    background: #38bdf8;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
     color: #0f172a;
-    padding: 8px 14px;
+    padding: 10px 20px;
     text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
+    border-radius: 50px; /* Bordes redondeados tipo píldora */
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    display: flex;
+    align-items: center;
 }
 
 .boton:hover {
-    background: #0ea5e9;
-    color: white;
+    background: white;
+    color: #0ea5e9;
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
 }
 
-/* ANIMACIÓN */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
+/* Icono pequeño dentro del botón (opcional pero profesional) */
+.boton::after {
+    content: ' ➜';
+    margin-left: 8px;
+    font-size: 14px;
 }
 
-/* SEPARADOR */
-hr {
-    border: none;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #38bdf8, transparent);
-    margin: 30px 0;
+/* Estilo para el footer */
+footer {
+    text-align: center;
+    font-size: 0.9rem;
+    opacity: 0.6;
+    margin-top: 20px;
+    color: #38bdf8;
 }
-</style>
-</head>
-
-<body>
-
-<!-- ===== PORTADA ===== -->
-<section class="portada">
-    <h1>💻 Computación Gráfica</h1>
-    <p>Portafolio de Proyectos</p>
-    <a href="#contenido" class="boton-portada">Ver Portafolio ↓</a>
-</section>
-
-<!-- ===== CONTENIDO ===== -->
-<div id="contenido" class="contenedor">
-
-    <div class="info">
-        <p><strong>Jhon Anderson Quispe Mamani</strong></p>
-        <p>Ingeniería de Sistemas e Informática</p>
-        <p>UTEA</p>
-    </div>
-
-    <hr>
-
-    <h2>📘 Ejercicios de Clase</h2>
-    <div class="lista">
-
-        <div class="item">
-            <span>🔵 Ejercicio 1: Dibujar un circulo</span>
-            <a href="Ejercicios de clase/Ejercicio1_Circulo.html" class="boton">Ver</a>
-        </div>
-
-        <div class="item">
-            <span>🔺 Ejercicio 2: Dibujar un cuadrado y triángulo</span>
-            <a href="Ejercicios de clase/Ejercicio2_CuadradoTriangulo.html" class="boton">Ver</a>
-        </div>
-
-        <div class="item">
-            <span>📊 Ejercicio 3: Crear un gráfico de barras</span>
-            <a href="Ejercicios de clase/Ejercicio3_GraficoBarras.html" class="boton">Ver</a>
-        </div>
-
-        <div class="item">
-            <span>📈 Ejercicio 4: Graficar una función Matemática</span>
-            <a href="Ejercicios de clase/Ejercicio4_FuncionMatematica.html" class="boton">Ver</a>
-        </div>
-
-        <div class="item">
-            <span>📉 Ejercicio 5: Gráfico de lineas dinámico</span>
-            <a href="Ejercicios de clase/Ejercicio5_GraficoLinealD.html" class="boton">Ver</a>
-        </div>
-
-    </div>
-
-    <hr>
-
-    <!-- TAREAS -->
-    <h2>📝 Actividad N°4</h2>
-
-    <div class="lista">
-
-        <div class="item">
-            <span>🧩 Ejercicio 1: Gráfico de Barras Dinámico</span>
-            <a href="Actividad N°4/Ejercicio1_GraficoBarrasDinamico.html" class="boton">Ver</a>
-        </div>
-
-        <div class="item">
-            <span>🧩 Ejercicio 2: Gráfico de Puntos en Movimiento</span>
-            <a href="Actividad N°4/Ejercicio2_GraficoPuntosMov.html" class="boton">Ver</a>
-        </div>
-        
-        <div class="item">
-            <span>🧩 Ejercicio 3: Curva Dinámica de la Función Coseno</span>
-            <a href="Actividad N°4/Ejercicio3_CurvaDinamicaCos.html" class="boton">Ver</a>
-        </div>
-
-    </div>
-    
-     <hr>
-    
-    <footer>
-        Computación Gráfica - 10mo
-    </footer>
-
-</div>
-
-</body>
-</html>

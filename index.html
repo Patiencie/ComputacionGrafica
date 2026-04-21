@@ -1,435 +1,238 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Portafolio - Computación Gráfica</title>
-
-
-
-<style>
-
-/* ===== FONDO GENERAL ===== */
-
-body {
-
-    margin: 0;
-
-    font-family: 'Segoe UI', Arial, sans-serif;
-
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-
-    color: #e2e8f0;
-
-}
-
-
-
-/* ===== PORTADA ===== */
-
-.portada {
-
-    height: 100vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9)),
-
-                url('https://images.unsplash.com/photo-1518770660439-4636190af475') center/cover;
-
-    text-align: center;
-
-    animation: fadeIn 2s ease;
-
-}
-
-
-
-.portada h1 {
-
-    font-size: 50px;
-
-    margin: 0;
-
-}
-
-
-
-.portada p {
-
-    font-size: 20px;
-
-    margin: 10px 0 30px;
-
-    opacity: 0.8;
-
-}
-
-
-
-/* BOTÓN PORTADA */
-
-.boton-portada {
-
-    padding: 12px 25px;
-
-    background: #38bdf8;
-
-    color: #0f172a;
-
-    text-decoration: none;
-
-    border-radius: 10px;
-
-    font-weight: bold;
-
-    transition: 0.3s;
-
-}
-
-
-
-.boton-portada:hover {
-
-    background: #0ea5e9;
-
-    color: white;
-
-    transform: scale(1.05);
-
-}
-
-
-
-/* ===== CONTENEDOR ===== */
-
-.contenedor {
-
-    max-width: 900px;
-
-    margin: 50px auto;
-
-    padding: 40px;
-
-    background: rgba(15, 23, 42, 0.85);
-
-    border-radius: 16px;
-
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-
-    backdrop-filter: blur(10px);
-
-}
-
-
-
-/* TITULOS */
-
-h2 {
-
-    text-align: center;
-
-    color: #38bdf8;
-
-}
-
-
-
-/* INFO */
-
-.info {
-
-    text-align: center;
-
-    margin-bottom: 30px;
-
-}
-
-
-
-/* LISTA */
-
-.lista {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 15px;
-
-}
-
-
-
-/* ITEMS */
-
-.item {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    background: rgba(255,255,255,0.05);
-
-    padding: 15px;
-
-    border-radius: 10px;
-
-    transition: 0.3s;
-
-}
-
-
-
-.item:hover {
-
-    background: rgba(56,189,248,0.15);
-
-    transform: translateX(5px);
-
-}
-
-
-
-/* BOTÓN */
-
-.boton {
-
-    background: #38bdf8;
-
-    color: #0f172a;
-
-    padding: 8px 14px;
-
-    text-decoration: none;
-
-    border-radius: 8px;
-
-    font-weight: bold;
-
-}
-
-
-
-.boton:hover {
-
-    background: #0ea5e9;
-
-    color: white;
-
-}
-
-
-
-/* ANIMACIÓN */
-
-@keyframes fadeIn {
-
-    from {opacity: 0; transform: translateY(20px);}
-
-    to {opacity: 1; transform: translateY(0);}
-
-}
-
-
-
-/* SEPARADOR */
-
-hr {
-
-    border: none;
-
-    height: 1px;
-
-    background: linear-gradient(to right, transparent, #38bdf8, transparent);
-
-    margin: 30px 0;
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio - Computación Gráfica</title>
+
+    <style>
+        /* ===== VARIABLES DE DISEÑO ÚNICO ===== */
+        :root {
+            --primary: #10b981; /* Verde Esmeralda Neón */
+            --secondary: #8b5cf6; /* Púrpura Eléctrico */
+            --bg-dark: #0f172a; 
+            --text-light: #e2e8f0;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #020617, #0f172a);
+            color: var(--text-light);
+            scroll-behavior: smooth;
+        }
+
+        /* ===== PORTADA ORIGINAL (Con tu imagen) ===== */
+        .portada {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* Usamos la imagen original que te gustaba */
+            background: linear-gradient(135deg, rgba(15,23,42,0.85), rgba(2,6,23,0.85)),
+                        url('https://images.unsplash.com/photo-1518770660439-4636190af475') center/cover;
+            text-align: center;
+            animation: fadeIn 2s ease;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .portada h1 {
+            font-size: 55px;
+            margin: 0;
+            color: white;
+            text-shadow: 0 0 15px var(--primary);
+        }
+
+        .portada p {
+            font-size: 22px;
+            margin: 15px 0 35px;
+            opacity: 0.9;
+            letter-spacing: 2px;
+        }
+
+        .boton-portada {
+            padding: 15px 35px;
+            background: var(--primary);
+            color: #020617;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .boton-portada:hover {
+            background: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px white;
+        }
+
+        /* ===== CONTENEDOR CON ESTILO MEJORADO ===== */
+        .contenedor {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 45px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .info {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+
+        .info strong { color: var(--primary); font-size: 1.3rem; }
+
+        /* TITULOS SECCIÓN */
+        h2 {
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before { content: "⚡"; }
+
+        /* ===== LISTA DE ACTIVIDADES (Estilo Pro) ===== */
+        .lista {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 18px 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .item:hover {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: var(--primary);
+            transform: translateX(8px);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .item span { font-weight: 500; }
+
+        /* ===== BOTONES EJECUTAR ===== */
+        .boton {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .boton:hover {
+            background: var(--primary);
+            color: #020617;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            margin: 40px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            opacity: 0.6;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+    </style>
 </head>
-
-
-
 <body>
 
+    <section class="portada">
+        <h1>💻 Computación Gráfica</h1>
+        <p>Portafolio de Proyectos</p>
+        <a href="#contenido" class="boton-portada">Ver Portafolio ↓</a>
+    </section>
 
+    <div id="contenido" class="contenedor">
 
-<!-- ===== PORTADA ===== -->
+        <div class="info">
+            <p>ESTUDIANTE: <strong>Jhon Anderson Quispe Mamani</strong></p>
+            <p>Ingeniería de Sistemas e Informática | UTEA Cusco</p>
+        </div>
 
-<section class="portada">
+        <h2>Ejercicios de Clase</h2>
+        <div class="lista">
+            <div class="item">
+                <span>🟢 Ejercicio 1: Dibujar un círculo</span>
+                <a href="Ejercicios de clase/Ejercicio1_Circulo.html" class="boton">Ejecutar</a>
+            </div>
+            <div class="item">
+                <span>🟢 Ejercicio 2: Cuadrado y Triángulo</span>
+                <a href="Ejercicios de clase/Ejercicio2_CuadradoTriangulo.html" class="boton">Ejecutar</a>
+            </div>
+            <div class="item">
+                <span>🟢 Ejercicio 3: Gráfico de Barras</span>
+                <a href="Ejercicios de clase/Ejercicio3_GraficoBarras.html" class="boton">Ejecutar</a>
+            </div>
+            <div class="item">
+                <span>🟢 Ejercicio 4: Función Matemática</span>
+                <a href="Ejercicios de clase/Ejercicio4_FuncionMatematica.html" class="boton">Ejecutar</a>
+            </div>
+            <div class="item">
+                <span>🟢 Ejercicio 5: Líneas Dinámicas</span>
+                <a href="Ejercicios de clase/Ejercicio5_GraficoLinealD.html" class="boton">Ejecutar</a>
+            </div>
+        </div>
 
-    <h1>💻 Computación Gráfica</h1>
+        <hr>
 
-    <p>Portafolio de Proyectos</p>
+        <h2>Actividad N°4</h2>
+        <div class="lista">
+            <div class="item">
+                <span>🔥 LAB 01: Barras Dinámicas</span>
+                <a href="Actividad N°4/Ejercicio1_GraficoBarrasDinamico.html" class="boton">Ejecutar</a>
+            </div>
+            <div class="item">
+                <span>🔥 LAB 02: Puntos en Movimiento</span>
+                <a href="Actividad N°4/Ejercicio2_GraficoPuntosMov.html" class="boton">Ejecutar</a>
+            </div>
+            <div class="item">
+                <span>🔥 LAB 03: Curva Dinámica Coseno</span>
+                <a href="Actividad N°4/Ejercicio3_CurvaDinamicaCos.html" class="boton">Ejecutar</a>
+            </div>
+        </div>
 
-    <a href="#contenido" class="boton-portada">Ver Portafolio ↓</a>
-
-</section>
-
-
-
-<!-- ===== CONTENIDO ===== -->
-
-<div id="contenido" class="contenedor">
-
-
-
-    <div class="info">
-
-        <p><strong>Jhon Anderson Quispe Mamani</strong></p>
-
-        <p>Ingeniería de Sistemas e Informática</p>
-
-        <p>UTEA</p>
-
+        <footer>
+            INGENIERÍA DE SISTEMAS - 10mo CICLO - 2026
+        </footer>
     </div>
-
-
-
-    <hr>
-
-
-
-    <h2>📘 Ejercicios de Clase</h2>
-
-    <div class="lista">
-
-
-
-        <div class="item">
-
-            <span>🔵 Ejercicio 1: Dibujar un circulo</span>
-
-            <a href="Ejercicios de clase/Ejercicio1_Circulo.html" class="boton">Ver</a>
-
-        </div>
-
-
-
-        <div class="item">
-
-            <span>🔺 Ejercicio 2: Dibujar un cuadrado y triángulo</span>
-
-            <a href="Ejercicios de clase/Ejercicio2_CuadradoTriangulo.html" class="boton">Ver</a>
-
-        </div>
-
-
-
-        <div class="item">
-
-            <span>📊 Ejercicio 3: Crear un gráfico de barras</span>
-
-            <a href="Ejercicios de clase/Ejercicio3_GraficoBarras.html" class="boton">Ver</a>
-
-        </div>
-
-
-
-        <div class="item">
-
-            <span>📈 Ejercicio 4: Graficar una función Matemática</span>
-
-            <a href="Ejercicios de clase/Ejercicio4_FuncionMatematica.html" class="boton">Ver</a>
-
-        </div>
-
-
-
-        <div class="item">
-
-            <span>📉 Ejercicio 5: Gráfico de lineas dinámico</span>
-
-            <a href="Ejercicios de clase/Ejercicio5_GraficoLinealD.html" class="boton">Ver</a>
-
-        </div>
-
-
-
-    </div>
-
-
-
-    <hr>
-
-
-
-    <!-- TAREAS -->
-
-    <h2>📝 Actividad N°4</h2>
-
-
-
-    <div class="lista">
-
-
-
-        <div class="item">
-
-            <span>🧩 Ejercicio 1: Gráfico de Barras Dinámico</span>
-
-            <a href="Actividad N°4/Ejercicio1_GraficoBarrasDinamico.html" class="boton">Ver</a>
-
-        </div>
-
-
-
-        <div class="item">
-
-            <span>🧩 Ejercicio 2: Gráfico de Puntos en Movimiento</span>
-
-            <a href="Actividad N°4/Ejercicio2_GraficoPuntosMov.html" class="boton">Ver</a>
-
-        </div>
-
-        
-
-        <div class="item">
-
-            <span>🧩 Ejercicio 3: Curva Dinámica de la Función Coseno</span>
-
-            <a href="Actividad N°4/Ejercicio3_CurvaDinamicaCos.html" class="boton">Ver</a>
-
-        </div>
-
-
-
-    </div>
-
-    
-
-     <hr>
-
-    
-
-    <footer>
-
-        Computación Gráfica - 10mo
-
-    </footer>
-
-
-
-</div>
-
-
 
 </body>
-
 </html>

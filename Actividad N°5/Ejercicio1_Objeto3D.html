@@ -3,13 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>objetos 3D</title>
+    <title>Objetos 3D</title>
 </head>
 <body>
+    <style> 
+        body { margin: 0; }
+        canvas { display: block; } /* Evita espacios extra debajo del canvas */
+
+        titulo {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            color: gray;
+            pointer-events: none;
+        }
+        h2 { margin: 0; font-size: 1.5rem; }
+    </style>
+
+    <titulo>
+        <h2>Propuesta 1: Traslación animada de un cubo en el espacio 3D</h2>
+        <h2>Realizado por: Jhon Anderson Quispe Mamani</h2>
+    </titulo>
+
     <!-- EJERCICIO DE TRASLACIÓN -->
 <!-- USO DE LA LIBRERIA THREE.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<SCRIpt>
+<Script>
     // CREAR LA ESCENA
     const scene = new THREE.Scene();
     // CREAR UNA CAMARA
@@ -27,6 +47,7 @@
     const cubo = new THREE.Mesh(geometry, material);
     scene.add(cubo);
 
+    
     // POSICIONAR LA CAMARA
     camera.position.z = 5;
 
@@ -40,7 +61,7 @@
         // MOVER EL CUBO
         cubo.position.x += direccion;
         // CAMBIAR LA DIRECCIÓN SI EL CUBO LLEGA A LOS LÍMITE DERECHO 
-        if (cubo.position.x > 6) {
+        if (cubo.position.x > 6.5) {
             direccion = -0.02;
         }
         // CAMBIAR LA DIRECCIÓN SI EL CUBO LLEGA A LOS LÍMITE IZQUIERDO 
@@ -53,8 +74,6 @@
     }
     animate();
 
-</SCRIpt>
-
-   
+</Script>
 </body>
 </html>

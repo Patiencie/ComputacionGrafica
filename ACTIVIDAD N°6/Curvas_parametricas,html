@@ -1,1 +1,61 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Curvas Paramétricas - Computación Gráfica</title>
+    <style>
+        body { background-color: #1a1a1a; color: white; display: flex; flex-direction: column; align-items: center; font-family: sans-serif; }
+        canvas { border: 2px solid #555; background-color: #000; margin-top: 20px; }
+        .controls { margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Curva Paramétrica: Espiral de Fermat</h2>
+    <p>Realizado por: Jhon Anderson Quispe Mamani</p>
+
+    <canvas id="graficoCanvas" width="600" height="600"></canvas>
+
+    <div class="controls">
+        <a href="javascript:history.back()" style="color: #00d4ff; text-decoration: none;">← Regresar</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('graficoCanvas');
+        const ctx = canvas.getContext('2d');
+        const centroX = canvas.width / 2;
+        const centroY = canvas.height / 2;
+
+        function dibujarCurva() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Estilo de la línea
+            ctx.beginPath();
+            ctx.strokeStyle = '#00d4ff';
+            ctx.lineWidth = 2;
+
+            // Dibujar la curva paramétrica
+            // Ecuación: x = (a * sqrt(t)) * cos(t), y = (a * sqrt(t)) * sin(t)
+            let a = 20; // Escala
+
+            for (let t = 0; t < 50; t += 0.1) {
+                // Fórmulas Paramétricas
+                let x = (a * Math.sqrt(t)) * Math.cos(t);
+                let y = (a * Math.sqrt(t)) * Math.sin(t);
+
+                // Dibujar hacia la nueva posición (ajustada al centro del canvas)
+                if (t === 0) {
+                    ctx.moveTo(centroX + x, centroY + y);
+                } else {
+                    ctx.lineTo(centroX + x, centroY + y);
+                }
+            }
+            
+            ctx.stroke();
+        }
+
+        dibujarCurva();
+    </script>
+</body>
+</html>

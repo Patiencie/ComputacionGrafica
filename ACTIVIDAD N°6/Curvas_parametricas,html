@@ -3,62 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curvas Paramétricas</title>
+    <title>Curvas Paramétricas - Investigación</title>
     <style>
-        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #1a1d23; color: white; overflow-x: hidden; }
-        .contenido { padding: 40px; max-width: 800px; margin: auto; line-height: 1.6; }
-        canvas { display: block; margin: 20px auto; border: 1px solid #444; border-radius: 8px; background: #000; }
-        .btn-regresar { position: fixed; top: 20px; left: 20px; padding: 8px 15px; background: #fff; color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; z-index: 100; }
-        h1, h2 { color: #00d4ff; }
-        .teoria { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+        body { 
+            margin: 0; 
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #1a1d23; 
+            color: white; 
+        }
+        .container { 
+            padding: 40px; 
+            max-width: 800px; 
+            margin: auto; 
+            line-height: 1.6; 
+        }
+        .btn-regresar { 
+            position: fixed; 
+            top: 20px; 
+            left: 20px; 
+            padding: 10px 20px; 
+            background: #ffffff; 
+            color: #000000; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            z-index: 100; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        h1, h2 { color: #00d4ff; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .box { 
+            background: rgba(255,255,255,0.05); 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin: 20px 0; 
+            border: 1px solid #333;
+        }
+        canvas { 
+            display: block; 
+            margin: 30px auto; 
+            background: #000; 
+            border: 2px solid #00d4ff; 
+            border-radius: 10px;
+            max-width: 100%;
+        }
     </style>
 </head>
 <body>
 
-    <a href="javascript:history.back()" class="btn-regresar">Regresar</a>
+    <a href="javascript:history.back()" class="btn-regresar">← Regresar</a>
 
-    <div class="contenido">
+    <div class="container">
         <h1>Investigación: Curvas Paramétricas</h1>
-        <p><b>Realizado por:</b> Jhon Anderson Quispe Mamani</p>
+        <p>Realizado por: <b>Jhon Anderson Quispe Mamani</b></p>
 
-        <div class="teoria">
-            <h2>¿Qué son?</h2>
-            <p>Son curvas donde las coordenadas <b>x</b> e <b>y</b> no dependen una de la otra, sino de una tercera variable llamada <b>parámetro (t)</b>. Su ecuación es P(t) = (x(t), y(t)).</p>
-            <h2>Importancia</h2>
-            <ul>
-                <li>Permiten dibujar formas complejas (lazos, círculos, espirales).</li>
-                <li>Son fundamentales para animaciones, ya que "t" puede representar el tiempo.</li>
-                <li>Se usan en diseño vectorial y modelado de trayectorias.</li>
-            </ul>
+        <div class="box">
+            <h2>Definición Técnica</h2>
+            <p>En computación gráfica, una curva paramétrica es aquella donde cada coordenada (x, y, z) se define como una función de un parámetro independiente, usualmente llamado <b>t</b>.</p>
+            <p>A diferencia de las funciones explícitas, estas permiten representar formas que se cruzan a sí mismas, como lazos o espirales complejas.</p>
         </div>
 
-        <h2>Ejemplo Visual: Espiral Paramétrica</h2>
-        <canvas id="canvasCurva" width="500" height="500"></canvas>
+        <h2>Ejemplo Práctico: Espiral de Fermat</h2>
+        <canvas id="grafico" width="500" height="500"></canvas>
     </div>
 
     <script>
-        const canvas = document.getElementById('canvasCurva');
-        const ctx = canvas.getContext('2d');
-        const cx = canvas.width / 2;
-        const cy = canvas.height / 2;
+        // Esperar a que cargue la ventana para evitar errores de renderizado
+        window.onload = function() {
+            const canvas = document.getElementById('grafico');
+            const ctx = canvas.getContext('2d');
+            
+            const centroX = canvas.width / 2;
+            const centroY = canvas.height / 2;
 
-        function dibujar() {
             ctx.strokeStyle = '#00d4ff';
             ctx.lineWidth = 2;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#00d4ff';
+
             ctx.beginPath();
+            
+            // Recorremos el parámetro t
+            for (let t = 0; t < 60; t += 0.1) {
+                // Ecuaciones paramétricas de la espiral
+                let x = (12 * Math.sqrt(t)) * Math.cos(t);
+                let y = (12 * Math.sqrt(t)) * Math.sin(t);
 
-            // Parámetro t de 0 a 50
-            for (let t = 0; t < 50; t += 0.1) {
-                // Ecuación paramétrica de la espiral
-                let x = (15 * Math.sqrt(t)) * Math.cos(t);
-                let y = (15 * Math.sqrt(t)) * Math.sin(t);
-
-                if (t === 0) ctx.moveTo(cx + x, cy + y);
-                else ctx.lineTo(cx + x, cy + y);
+                if (t === 0) {
+                    ctx.moveTo(centroX + x, centroY + y);
+                } else {
+                    ctx.lineTo(centroX + x, centroY + y);
+                }
             }
             ctx.stroke();
-        }
-        dibujar();
+        };
     </script>
 </body>
 </html>

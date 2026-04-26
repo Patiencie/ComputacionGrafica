@@ -1,61 +1,64 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Curvas Paramétricas - Computación Gráfica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curvas Paramétricas</title>
     <style>
-        body { background-color: #1a1a1a; color: white; display: flex; flex-direction: column; align-items: center; font-family: sans-serif; }
-        canvas { border: 2px solid #555; background-color: #000; margin-top: 20px; }
-        .controls { margin-top: 10px; }
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #1a1d23; color: white; overflow-x: hidden; }
+        .contenido { padding: 40px; max-width: 800px; margin: auto; line-height: 1.6; }
+        canvas { display: block; margin: 20px auto; border: 1px solid #444; border-radius: 8px; background: #000; }
+        .btn-regresar { position: fixed; top: 20px; left: 20px; padding: 8px 15px; background: #fff; color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; z-index: 100; }
+        h1, h2 { color: #00d4ff; }
+        .teoria { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
 
-    <h2>Curva Paramétrica: Espiral de Fermat</h2>
-    <p>Realizado por: Jhon Anderson Quispe Mamani</p>
+    <a href="javascript:history.back()" class="btn-regresar">Regresar</a>
 
-    <canvas id="graficoCanvas" width="600" height="600"></canvas>
+    <div class="contenido">
+        <h1>Investigación: Curvas Paramétricas</h1>
+        <p><b>Realizado por:</b> Jhon Anderson Quispe Mamani</p>
 
-    <div class="controls">
-        <a href="javascript:history.back()" style="color: #00d4ff; text-decoration: none;">← Regresar</a>
+        <div class="teoria">
+            <h2>¿Qué son?</h2>
+            <p>Son curvas donde las coordenadas <b>x</b> e <b>y</b> no dependen una de la otra, sino de una tercera variable llamada <b>parámetro (t)</b>. Su ecuación es P(t) = (x(t), y(t)).</p>
+            <h2>Importancia</h2>
+            <ul>
+                <li>Permiten dibujar formas complejas (lazos, círculos, espirales).</li>
+                <li>Son fundamentales para animaciones, ya que "t" puede representar el tiempo.</li>
+                <li>Se usan en diseño vectorial y modelado de trayectorias.</li>
+            </ul>
+        </div>
+
+        <h2>Ejemplo Visual: Espiral Paramétrica</h2>
+        <canvas id="canvasCurva" width="500" height="500"></canvas>
     </div>
 
     <script>
-        const canvas = document.getElementById('graficoCanvas');
+        const canvas = document.getElementById('canvasCurva');
         const ctx = canvas.getContext('2d');
-        const centroX = canvas.width / 2;
-        const centroY = canvas.height / 2;
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
 
-        function dibujarCurva() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Estilo de la línea
-            ctx.beginPath();
+        function dibujar() {
             ctx.strokeStyle = '#00d4ff';
             ctx.lineWidth = 2;
+            ctx.beginPath();
 
-            // Dibujar la curva paramétrica
-            // Ecuación: x = (a * sqrt(t)) * cos(t), y = (a * sqrt(t)) * sin(t)
-            let a = 20; // Escala
-
+            // Parámetro t de 0 a 50
             for (let t = 0; t < 50; t += 0.1) {
-                // Fórmulas Paramétricas
-                let x = (a * Math.sqrt(t)) * Math.cos(t);
-                let y = (a * Math.sqrt(t)) * Math.sin(t);
+                // Ecuación paramétrica de la espiral
+                let x = (15 * Math.sqrt(t)) * Math.cos(t);
+                let y = (15 * Math.sqrt(t)) * Math.sin(t);
 
-                // Dibujar hacia la nueva posición (ajustada al centro del canvas)
-                if (t === 0) {
-                    ctx.moveTo(centroX + x, centroY + y);
-                } else {
-                    ctx.lineTo(centroX + x, centroY + y);
-                }
+                if (t === 0) ctx.moveTo(cx + x, cy + y);
+                else ctx.lineTo(cx + x, cy + y);
             }
-            
             ctx.stroke();
         }
-
-        dibujarCurva();
+        dibujar();
     </script>
 </body>
 </html>

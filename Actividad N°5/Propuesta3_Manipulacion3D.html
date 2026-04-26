@@ -54,7 +54,7 @@
         <b>W / S</b> : Mover Arriba / Abajo<br>
         <b>A / D</b> : Mover Izquierda / Derecha<br>
         <b>Q / E</b> : Rotar Cubo<br>
-        <b>Z / X</b> : Escalar (Zoom In/Out)<br>
+        <b>Z / X</b> : Escalar (Tamaño)<br>
     </div>
 
     <!-- importamos Three.js -->
@@ -65,9 +65,9 @@
         // CREAR LA ESCENA
         const scene = new THREE.Scene();
         // crear el fondo de la escena
-        scene.background = new THREE.Color(0x20232a);
+        scene.background = new THREE.Color(0x202020); // fondo oscuro elegante
         // CREAR UNA CAMARA
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(33, window.innerWidth / window.innerHeight, 0.1, 1000);
 
         // CREAR UN RENDERIZADOR
         const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -87,54 +87,64 @@
         scene.add(light);
 
         // POSICIONAR LA CAMARA
-        camera.position.z = 5;
+        camera.position.z = 12;
 
         // variables para controlar la dirección del movimiento mediante teclado
         window.addEventListener('keydown', (event) => {
             switch(event.key) {
                 
-                //traslación 
+                //TRASLACIÓN EN EL EJE "Y" y "X"
                 case 'w':
-                    case 'W':
-                    cubo.position.y += 0.2; // mover hacia arriba
-                    break;
+                case 'W':
+                    if (cubo.position.y < 2.9) cubo.position.y += 0.2; // mover hacia arriba con límite
+                break;
+
                 case 's':
-                    case 'S':
-                    cubo.position.y -= 0.2; // mover hacia abajo
-                    break;
+                case 'S':
+                    if (cubo.position.y > -2.9) cubo.position.y -= 0.2; // mover hacia abajo con límite
+                break;
+
                 case 'a':
-                    case 'A':
-                    cubo.position.x -= 0.2; // mover hacia la izquierda
-                    break;
+                case 'A':
+                    if (cubo.position.x > -6.5) cubo.position.x -= 0.2; // mover hacia la izquierda con límite
+                break;
+
                 case 'd':
-                    case 'D':
-                    cubo.position.x += 0.2; // mover hacia la derecha
-                    break;
-                    // ROTACIÓN Y ESCALADO
+                case 'D':
+                    if (cubo.position.x < 6.5) cubo.position.x += 0.2; // mover hacia la derecha con límite
+                break;  
+
+                // ROTACIÓN Y ESCALADO
                 case 'q':
-                    case 'Q':
+                case 'Q':
                     cubo.rotation.y -= 0.1; // rotar a la izquierda
-                    break;
+                break;
+
                 case 'e':
-                    case 'E':
+                case 'E':
                     cubo.rotation.y += 0.1; // rotar a la derecha
-                    break;
+                break;
                     
                 // ESCALADO
-                    case 'z':
-                        case 'Z':
-                    cubo.scale.x +=0.1;
-                    cubo.scale.y +=0.1;
-                    cubo.scale.z +=0.1;
-                            
-                    // escalar hacia arriba
-                    // para evitar que el cubo se vuelva demasiado pequeño, se puede agregar una condición para limitar el escalado hacia abajo
-                    break;
+                case 'z':
+                case 'Z':
+                    if (cubo.scale.x < 5.3) { // límite de tamaño máximo
+                        cubo.scale.x += 0.1;
+                         cubo.scale.y += 0.1;
+                        cubo.scale.z += 0.1;
+                    }
+                break;      
+
+                // escalar hacia arriba
+                // para evitar que el cubo se vuelva demasiado pequeño, se puede agregar una condición para limitar el escalado hacia abajo
                 case 'x':
-                    cubo.scale.x = Math.max(0.2, cubo.scale.x  - 0.1); // limitar el escalado hacia abajo
-                    cubo.scale.y = Math.max(0.2, cubo.scale.y  - 0.1);
-                    cubo.scale.z = Math.max(0.2, cubo.scale.z  - 0.1); // escalar hacia abajo
-                    break;
+                case 'X':
+                    if (cubo.scale.x > 0.3) { // límite de tamaño mínimo
+                        cubo.scale.x -= 0.1;
+                        cubo.scale.y -= 0.1;
+                        cubo.scale.z -= 0.1;
+                    }
+                break;
             }
         });
 

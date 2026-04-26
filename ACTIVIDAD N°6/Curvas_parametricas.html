@@ -3,50 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curvas Paramétricas - Investigación</title>
+    <title>Computación Gráfica - Investigación Avanzada</title>
     <style>
-        body { 
-            margin: 0; 
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: #1a1d23; 
-            color: white; 
-        }
-        .container { 
-            padding: 40px; 
-            max-width: 800px; 
-            margin: auto; 
-            line-height: 1.6; 
-        }
-        .btn-regresar { 
-            position: fixed; 
-            top: 20px; 
-            left: 20px; 
-            padding: 10px 20px; 
-            background: #ffffff; 
-            color: #000000; 
-            text-decoration: none; 
-            border-radius: 5px; 
-            font-weight: bold; 
-            z-index: 100; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        h1, h2 { color: #00d4ff; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .box { 
-            background: rgba(255,255,255,0.05); 
-            padding: 20px; 
-            border-radius: 12px; 
-            margin: 20px 0; 
-            border: 1px solid #333;
-        }
-        canvas { 
-            display: block; 
-            margin: 30px auto; 
-            background: #000; 
-            border: 2px solid #00d4ff; 
-            border-radius: 10px;
-            max-width: 100%;
-        }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f1115; color: #e0e0e0; line-height: 1.7; }
+        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .btn-regresar { position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 10px 20px; background: #00d4ff; color: #000; text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+        .btn-regresar:hover { background: #fff; box-shadow: 0 0 15px #00d4ff; }
+        
+        h1 { color: #00d4ff; font-size: 2.5rem; text-align: center; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 2px; }
+        h2 { color: #00d4ff; border-left: 4px solid #00d4ff; padding-left: 15px; margin-top: 40px; }
+        
+        .section { background: #1a1d23; padding: 30px; border-radius: 15px; border: 1px solid #333; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        code { background: #2c313a; color: #e06c75; padding: 2px 6px; border-radius: 4px; }
+        
+        canvas, .viewer-3d { display: block; margin: 30px auto; background: #000; border-radius: 10px; border: 1px solid #00d4ff; width: 100%; max-width: 600px; height: 400px; }
     </style>
 </head>
 <body>
@@ -54,49 +24,79 @@
     <a href="javascript:history.back()" class="btn-regresar">← Regresar</a>
 
     <div class="container">
-        <h1>Investigación: Curvas Paramétricas</h1>
-        <p>Realizado por: <b>Jhon Anderson Quispe Mamani</b></p>
+        <h1>Investigación de Computación Gráfica</h1>
+        <p style="text-align:center; opacity: 0.7;">Autor: Jhon Anderson Quispe Mamani</p>
 
-        <div class="box">
-            <h2>Definición Técnica</h2>
-            <p>En computación gráfica, una curva paramétrica es aquella donde cada coordenada (x, y, z) se define como una función de un parámetro independiente, usualmente llamado <b>t</b>.</p>
-            <p>A diferencia de las funciones explícitas, estas permiten representar formas que se cruzan a sí mismas, como lazos o espirales complejas.</p>
+        <div class="section">
+            <h2>1. Curvas Paramétricas y Continuidad</h2>
+            <p>A diferencia de las curvas explícitas, las paramétricas definen <code>P(t) = (x(t), y(t), z(t))</code>. En ingeniería, esto permite la <b>continuidad geométrica (G)</b>.</p>
+            <ul>
+                <li><b>G0:</b> Las curvas están unidas.</li>
+                <li><b>G1:</b> Tangencia común en el punto de unión.</li>
+                <li><b>G2:</b> Curvatura idéntica en la unión (esencial para superficies de autos y aviones).</li>
+            </ul>
+            <p>Abajo se muestra una <b>Curva de Lissajous</b>, un ejemplo clásico de trayectoria paramétrica compleja:</p>
+            <canvas id="canvasCurva"></canvas>
         </div>
 
-        <h2>Ejemplo Práctico: Espiral de Fermat</h2>
-        <canvas id="grafico" width="500" height="500"></canvas>
+        <div class="section">
+            <h2>2. Topología y Mallas Poligonales</h2>
+            <p>Las mallas se definen por una tupla <code>M = (V, E, F)</code> (Vértices, Aristas, Caras). La eficiencia de una malla depende de su <b>resolución poligonal</b> y la orientación de sus <b>normales</b>.</p>
+            <p>Para optimizar el renderizado, se utilizan técnicas como:</p>
+            <ul>
+                <li><b>Back-face Culling:</b> No renderizar las caras que no miran a la cámara.</li>
+                <li><b>LOD (Level of Detail):</b> Reducir polígonos cuando el objeto está lejos.</li>
+            </ul>
+            <p>Ejemplo: Malla de un <b>Toroide (Dona)</b> visualizada en estructura de alambre:</p>
+            <div id="container3d" class="viewer-3d"></div>
+        </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Esperar a que cargue la ventana para evitar errores de renderizado
-        window.onload = function() {
-            const canvas = document.getElementById('grafico');
-            const ctx = canvas.getContext('2d');
-            
-            const centroX = canvas.width / 2;
-            const centroY = canvas.height / 2;
+        // --- LÓGICA DE CURVA PARAMÉTRICA ---
+        const cvs = document.getElementById('canvasCurva');
+        const ctx = cvs.getContext('2d');
+        cvs.width = 600; cvs.height = 400;
 
+        function dibujarCurva() {
+            ctx.clearRect(0,0,600,400);
             ctx.strokeStyle = '#00d4ff';
             ctx.lineWidth = 2;
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#00d4ff';
-
             ctx.beginPath();
-            
-            // Recorremos el parámetro t
-            for (let t = 0; t < 60; t += 0.1) {
-                // Ecuaciones paramétricas de la espiral
-                let x = (12 * Math.sqrt(t)) * Math.cos(t);
-                let y = (12 * Math.sqrt(t)) * Math.sin(t);
-
-                if (t === 0) {
-                    ctx.moveTo(centroX + x, centroY + y);
-                } else {
-                    ctx.lineTo(centroX + x, centroY + y);
-                }
+            for(let t=0; t < Math.PI * 2; t += 0.01) {
+                // Ecuación de Lissajous
+                let x = 200 * Math.sin(3 * t + Math.PI/2);
+                let y = 150 * Math.sin(2 * t);
+                if(t===0) ctx.moveTo(300+x, 200+y);
+                else ctx.lineTo(300+x, 200+y);
             }
             ctx.stroke();
-        };
+        }
+        dibujarCurva();
+
+        // --- LÓGICA DE MALLA 3D (THREE.JS) ---
+        const container = document.getElementById('container3d');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        // Creamos un Toroide (Dona) como ejemplo de malla compleja
+        const geometry = new THREE.TorusGeometry(1.5, 0.6, 12, 24);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true });
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+        camera.position.z = 6;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            mesh.rotation.y += 0.01;
+            mesh.rotation.x += 0.005;
+            renderer.render(scene, camera);
+        }
+        animate();
     </script>
 </body>
 </html>

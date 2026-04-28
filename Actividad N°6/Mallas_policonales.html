@@ -17,7 +17,9 @@
       --shadow: 0 10px 30px rgba(0,0,0,.08);
       --max: 1080px;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
@@ -25,22 +27,44 @@
       color: var(--text);
       line-height: 1.7;
     }
+
     header {
       background: linear-gradient(135deg, #0d6b72, #17434a);
       color: white;
       padding: 56px 24px;
     }
-    .wrap { max-width: var(--max); margin: 0 auto; }
-    h1, h2, h3 { line-height: 1.2; }
-    h1 { font-size: 2.3rem; margin: 0 0 12px; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin: 0 0 12px;
+    }
+
     h2 {
       font-size: 1.9rem;
       margin-top: 0;
       border-bottom: 3px solid var(--accent);
       padding-bottom: 8px;
     }
-    h3 { font-size: 1.2rem; margin-top: 28px; color: #17363c; }
-    main { padding: 28px 24px 64px; }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-top: 28px;
+      color: #17363c;
+    }
+
+    main {
+      padding: 28px 24px 64px;
+    }
+
     section {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -49,39 +73,117 @@
       margin: 22px auto;
       box-shadow: var(--shadow);
     }
-    p { margin: 12px 0; text-align: justify; }
-    .lead { font-size: 1.08rem; max-width: 80ch; }
+
+    p {
+      margin: 12px 0;
+      text-align: justify;
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      max-width: 80ch;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 18px;
       margin-top: 18px;
     }
+
     .card {
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 18px;
     }
-    ul { margin: 8px 0 0 20px; }
-    li { margin-bottom: 8px; }
-    .graphic {
+
+    ul {
+      margin: 8px 0 0 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .refs ol {
+      padding-left: 22px;
+    }
+
+    .refs li {
+      margin-bottom: 10px;
+    }
+
+    sup a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .btn-volver {
+      margin: 22px 0 0;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      box-shadow: var(--shadow);
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .btn-volver:hover {
+      background: #09545a;
+      transform: translateY(-2px);
+    }
+
+    .btn-volver:active {
+      transform: translateY(0);
+    }
+
+    .canvas-3d {
       margin-top: 22px;
-      background: #fcfbf8;
+      background: #0b0f14;
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 18px;
-      overflow-x: auto;
+      overflow: hidden;
+      position: relative;
+      height: 520px;
     }
-    figcaption {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: .95rem;
+
+    .canvas-3d .overlay {
+      position: absolute;
+      top: 14px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      z-index: 10;
+      pointer-events: none;
+      font-family: 'Segoe UI', Arial, sans-serif;
     }
-    .refs ol { padding-left: 22px; }
-    .refs li { margin-bottom: 10px; }
-    sup a { color: var(--accent); text-decoration: none; }
-    a { color: var(--accent); }
+
+    .canvas-3d .overlay h4 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .canvas-3d .overlay p {
+      margin: 4px 0 0;
+      text-align: center;
+      color: #d7d7d7;
+      font-size: 0.92rem;
+    }
+
+    #canvasMalla {
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 <body>
@@ -95,6 +197,10 @@
     </div>
   </header>
 
+  <div class="wrap">
+    <button class="btn-volver" onclick="history.back()">← Volver a la página anterior</button>
+  </div>
+
   <main class="wrap">
     <section>
       <h2>Concepto</h2>
@@ -105,7 +211,7 @@
         geométrica de un objeto tridimensional. En computación gráfica, las mallas poligonales
         son la estructura dominante para representar superficies 3D, ya que se adaptan
         eficientemente a los algoritmos de renderizado y al procesamiento del hardware gráfico
-        moderno.<sup><a href="#ref1">[1]</a></sup><sup><a href="#ref2">[2]</a></sup>
+        moderno.
       </p>
 
       <p>
@@ -113,7 +219,7 @@
         continuas mediante entidades discretas. Aunque una superficie matemática puede ser suave
         y analítica, una GPU trabaja de manera especialmente eficiente con triángulos y listas de
         vértices, por lo que las mallas constituyen el puente entre el modelado geométrico y la
-        visualización final en pantalla.<sup><a href="#ref2">[2]</a></sup><sup><a href="#ref3">[3]</a></sup>
+        visualización final en pantalla.
       </p>
 
       <p>
@@ -122,7 +228,6 @@
         vértices, sino de cómo estos se conectan entre sí. Por ello, la investigación en
         computación gráfica ha dado gran importancia a las estructuras de datos que almacenan
         conectividad de manera eficiente, como las estructuras half-edge.
-        <sup><a href="#ref1">[1]</a></sup><sup><a href="#ref4">[4]</a></sup>
       </p>
 
       <div class="grid">
@@ -133,7 +238,6 @@
             representar modelos 3D en videojuegos, simuladores, animación y visualización
             científica. Su compatibilidad con la rasterización y con el procesamiento paralelo de
             la GPU las hace indispensables en tiempo real.
-            <sup><a href="#ref2">[2]</a></sup><sup><a href="#ref3">[3]</a></sup>
           </p>
         </div>
 
@@ -143,7 +247,7 @@
             Se utilizan en motores gráficos, software de modelado 3D, cine digital, realidad
             virtual, reconstrucción 3D e impresión aditiva. También son frecuentes en
             procesamiento geométrico para simplificación, subdivisión, suavizado y análisis de
-            superficies.<sup><a href="#ref3">[3]</a></sup><sup><a href="#ref4">[4]</a></sup>
+            superficies.
           </p>
         </div>
 
@@ -153,7 +257,7 @@
             Su mayor fortaleza es el equilibrio entre expresividad geométrica y eficiencia
             computacional. Una malla puede aproximar casi cualquier superficie y, al mismo tiempo,
             ser manipulada por algoritmos bien establecidos de iluminación, texturizado, colisión
-            y deformación.<sup><a href="#ref2">[2]</a></sup><sup><a href="#ref4">[4]</a></sup>
+            y deformación.
           </p>
         </div>
       </div>
@@ -164,7 +268,6 @@
         vértices almacenan coordenadas y, con frecuencia, atributos adicionales como normales,
         color o coordenadas de textura; las aristas codifican relaciones entre pares de vértices;
         y las caras agrupan vértices en polígonos que delimitan la superficie visible del objeto.
-        <sup><a href="#ref3">[3]</a></sup><sup><a href="#ref4">[4]</a></sup>
       </p>
 
       <p>
@@ -172,14 +275,13 @@
         puede descomponerse en triángulos y estos son geométricamente estables para el
         renderizado. También se emplean mallas de quads en modelado y animación, así como mallas
         manifold y no-manifold según la validez topológica de la conectividad.
-        <sup><a href="#ref2">[2]</a></sup><sup><a href="#ref4">[4]</a></sup>
       </p>
 
       <ul>
-        <li><strong>Malla triangular:</strong> la más compatible con GPU y rasterización.<sup><a href="#ref2">[2]</a></sup></li>
-        <li><strong>Malla de quads:</strong> útil para modelado orgánico y subdivisión.<sup><a href="#ref3">[3]</a></sup></li>
-        <li><strong>Malla manifold:</strong> topológicamente consistente y fácil de procesar.<sup><a href="#ref1">[1]</a></sup></li>
-        <li><strong>Malla no-manifold:</strong> presenta configuraciones problemáticas para algunos algoritmos.<sup><a href="#ref1">[1]</a></sup></li>
+        <li><strong>Malla triangular:</strong> la más compatible con GPU y rasterización.</li>
+        <li><strong>Malla de quads:</strong> útil para modelado orgánico y subdivisión.</li>
+        <li><strong>Malla manifold:</strong> topológicamente consistente y fácil de procesar.</li>
+        <li><strong>Malla no-manifold:</strong> presenta configuraciones problemáticas para algunos algoritmos.</li>
       </ul>
 
       <h3>Usos en computación gráfica</h3>
@@ -187,7 +289,7 @@
         Las mallas poligonales se emplean para representar personajes, escenarios, objetos,
         terrenos y prácticamente cualquier geometría visible en un entorno 3D. Además, son la
         base para técnicas como mapeo de texturas, sombreado, animación por esqueleto, detección
-        de colisiones y simulación física.<sup><a href="#ref2">[2]</a></sup><sup><a href="#ref4">[4]</a></sup>
+        de colisiones y simulación física.
       </p>
 
       <p>
@@ -195,80 +297,120 @@
         ampliamente documentada en literatura y software académico, divide cada arista en dos
         semiaristas dirigidas, lo que permite recorrer eficientemente caras adyacentes, vecinos
         de un vértice y relaciones topológicas locales.
-        <sup><a href="#ref1">[1]</a></sup><sup><a href="#ref4">[4]</a></sup>
       </p>
 
-      <h3>Ejemplo gráfico</h3>
-      <figure class="graphic">
-        <svg width="900" height="380" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
-          <rect width="900" height="380" fill="#fcfbf8"/>
-          <g transform="translate(90,40)">
-            <g stroke="#cfc8bc" stroke-width="1">
-              <line x1="0" y1="270" x2="720" y2="270"/>
-            </g>
-            <g fill="none" stroke="#0d6b72" stroke-width="2.4">
-              <polygon points="80,220 180,120 280,220"/>
-              <polygon points="180,120 280,220 380,105"/>
-              <polygon points="280,220 380,105 480,215"/>
-              <polygon points="380,105 480,215 590,135"/>
-              <polygon points="180,120 130,250 80,220"/>
-              <polygon points="180,120 230,250 280,220"/>
-              <polygon points="380,105 330,250 280,220"/>
-              <polygon points="380,105 430,250 480,215"/>
-              <polygon points="590,135 540,250 480,215"/>
-            </g>
-            <g fill="#ab6a18">
-              <circle cx="80" cy="220" r="5"/>
-              <circle cx="180" cy="120" r="5"/>
-              <circle cx="280" cy="220" r="5"/>
-              <circle cx="380" cy="105" r="5"/>
-              <circle cx="480" cy="215" r="5"/>
-              <circle cx="590" cy="135" r="5"/>
-              <circle cx="130" cy="250" r="5"/>
-              <circle cx="230" cy="250" r="5"/>
-              <circle cx="330" cy="250" r="5"/>
-              <circle cx="430" cy="250" r="5"/>
-              <circle cx="540" cy="250" r="5"/>
-            </g>
-            <g font-family="Georgia, serif" font-size="16" fill="#22201c">
-              <text x="0" y="24" font-size="20" fill="#0d6b72">Ejemplo de malla triangular</text>
-              <text x="603" y="138">vértice</text>
-              <text x="300" y="293">aristas y caras triangulares</text>
-            </g>
-          </g>
-        </svg>
-        <figcaption>
-          Ejemplo gráfico de una malla poligonal triangular. Los puntos representan vértices y
-          los segmentos representan aristas que delimitan caras triangulares.
-        </figcaption>
-      </figure>
+      <h3>Ejemplo gráfico en computación gráfica</h3>
+      <p>
+        El ejemplo siguiente usa una geometría 3D y visualiza sus aristas con
+        <code>EdgesGeometry</code>, una clase de Three.js que genera una geometría de líneas a partir
+        de los bordes de otra geometría. Esto permite mostrar claramente la estructura de una malla
+        poligonal dentro de una escena 3D.
+      </p>
+
+      <div class="canvas-3d">
+        <div class="overlay">
+          <h4>Ejemplo Three.js: Malla poligonal 3D</h4>
+          <p>Geometría con aristas visibles tipo wireframe</p>
+        </div>
+        <div id="canvasMalla"></div>
+      </div>
 
       <div class="refs">
         <h3>Bibliografía</h3>
         <ol>
-          <li id="ref1">OpenMesh Documentation. <em>The Halfedge Data Structure</em>. RWTH Aachen University. Disponible en:
+          <li>OpenMesh Documentation. <em>The Halfedge Data Structure</em>. RWTH Aachen University. Disponible en:
             <a href="https://www.graphics.rwth-aachen.de/media/openmesh_static/Documentations/OpenMesh-6.3-Documentation/a00010.html" target="_blank" rel="noopener noreferrer">
               OpenMesh documentation
             </a>
           </li>
-          <li id="ref2">Scratchapixel. <em>Introduction to Polygon Meshes</em>. Disponible en:
+          <li>Scratchapixel. <em>Introduction to Polygon Meshes</em>. Disponible en:
             <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-polygon-mesh/introduction.html" target="_blank" rel="noopener noreferrer">
               https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-polygon-mesh/introduction.html
             </a>
           </li>
-          <li id="ref3">Princeton University. <em>Polygonal Meshes</em>. Disponible en:
+          <li>Princeton University. <em>Polygonal Meshes</em>. Disponible en:
             <a href="https://www.cs.princeton.edu/courses/archive/fall16/cos526/lectures/14-mesh.pdf" target="_blank" rel="noopener noreferrer">
               Princeton mesh notes
             </a>
           </li>
-          <li id="ref4">Botsch, M.; Kobbelt, L.; Pauly, M.; Alliez, P.; Lévy, B. <em>Polygon Mesh Processing</em>. Complementado con:
+          <li>Botsch, M.; Kobbelt, L.; Pauly, M.; Alliez, P.; Lévy, B. <em>Polygon Mesh Processing</em>. Complementado con:
             <a href="https://graphics.rwth-aachen.de/media/papers/tutorial1.pdf" target="_blank" rel="noopener noreferrer">
               Geometric Modeling Based on Polygonal Meshes
+            </a>
+          </li>
+          <li>three.js documentation. <em>EdgesGeometry</em>. Disponible en:
+            <a href="https://threejs.org/docs/pages/EdgesGeometry.html" target="_blank" rel="noopener noreferrer">
+              https://threejs.org/docs/pages/EdgesGeometry.html
+            </a>
+          </li>
+          <li>three.js documentation. <em>SphereGeometry</em>. Disponible en:
+            <a href="https://threejs.org/docs/pages/SphereGeometry.html" target="_blank" rel="noopener noreferrer">
+              https://threejs.org/docs/pages/SphereGeometry.html
             </a>
           </li>
         </ol>
       </div>
     </section>
   </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const contenedorMalla = document.getElementById('canvasMalla');
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0b0f14);
+
+    const camera = new THREE.PerspectiveCamera(45, contenedorMalla.clientWidth / 520, 0.1, 1000);
+    camera.position.set(0, 3, 10);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(contenedorMalla.clientWidth, 520);
+    contenedorMalla.appendChild(renderer.domElement);
+
+    const luzAmbiental = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(luzAmbiental);
+
+    const luzDireccional = new THREE.DirectionalLight(0xffffff, 1);
+    luzDireccional.position.set(5, 8, 10);
+    scene.add(luzDireccional);
+
+    const axesHelper = new THREE.AxesHelper(5);
+    scene.add(axesHelper);
+
+    const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
+    scene.add(gridHelper);
+
+    const geometry = new THREE.SphereGeometry(2.2, 10, 8);
+    const materialMesh = new THREE.MeshPhongMaterial({
+      color: 0x2277ff,
+      flatShading: true,
+      transparent: true,
+      opacity: 0.85,
+      side: THREE.DoubleSide
+    });
+
+    const objeto = new THREE.Mesh(geometry, materialMesh);
+    scene.add(objeto);
+
+    const edges = new THREE.EdgesGeometry(geometry);
+    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+    const wireframe = new THREE.LineSegments(edges, lineMaterial);
+    objeto.add(wireframe);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      objeto.rotation.x += 0.01;
+      objeto.rotation.y += 0.015;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = contenedorMalla.clientWidth / 520;
+      camera.updateProjectionMatrix();
+      renderer.setSize(contenedorMalla.clientWidth, 520);
+    });
+  </script>
 </body>
 </html>

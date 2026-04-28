@@ -1,77 +1,260 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investigación: Curvas Paramétricas Avanzadas</title>
-    <style>
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background: #0b0e11; color: #d1d1d1; line-height: 1.8; }
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
-        .btn-regresar { position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 10px 18px; background: #00d4ff; color: #000; text-decoration: none; border-radius: 4px; font-weight: bold; }
-        h1 { color: #00d4ff; font-size: 2.2rem; text-align: center; border-bottom: 2px solid #00d4ff; padding-bottom: 20px; }
-        h2 { color: #00d4ff; margin-top: 40px; font-size: 1.5rem; }
-        .card { background: #161b22; padding: 30px; border-radius: 8px; border: 1px solid #30363d; margin-bottom: 30px; }
-        code { color: #e06c75; background: #21262d; padding: 2px 5px; border-radius: 3px; }
-        canvas { display: block; margin: 30px auto; background: #000; border: 1px solid #00d4ff; border-radius: 5px; width: 100%; max-width: 600px; height: 400px; }
-        .highlight { color: #00d4ff; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curvas Paramétricas en Computación Gráfica</title>
+  <style>
+    :root {
+      --bg: #f7f6f2;
+      --surface: #ffffff;
+      --surface-2: #f1efe9;
+      --text: #22201c;
+      --muted: #5c5a56;
+      --accent: #0d6b72;
+      --accent-2: #ab6a18;
+      --border: #d7d2c8;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --max: 1080px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(135deg, #0d6b72, #17434a);
+      color: white;
+      padding: 56px 24px;
+    }
+    .wrap { max-width: var(--max); margin: 0 auto; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { font-size: 2.3rem; margin: 0 0 12px; }
+    h2 {
+      font-size: 1.9rem;
+      margin-top: 0;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 8px;
+    }
+    h3 { font-size: 1.2rem; margin-top: 28px; color: #17363c; }
+    main { padding: 28px 24px 64px; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      margin: 22px auto;
+      box-shadow: var(--shadow);
+    }
+    p { margin: 12px 0; text-align: justify; }
+    .lead { font-size: 1.08rem; max-width: 80ch; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    ul { margin: 8px 0 0 20px; }
+    li { margin-bottom: 8px; }
+    .graphic {
+      margin-top: 22px;
+      background: #fcfbf8;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      overflow-x: auto;
+    }
+    figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .refs ol { padding-left: 22px; }
+    .refs li { margin-bottom: 10px; }
+    sup a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent); }
+  </style>
 </head>
 <body>
-
-    <a href="javascript:history.back()" class="btn-regresar">← Volver</a>
-
-    <div class="container">
-        <h1>Análisis de Curvas Paramétricas</h1>
-        <p style="text-align:center; opacity:0.6;">Autor: Jhon Anderson Quispe Mamani</p>
-
-        <div class="card">
-            <h2>1. Espacio Paramétrico y Continuidad</h2>
-            <p>Una curva paramétrica en $\mathbb{R}^3$ se define mediante una función vectorial $\mathbf{r}(t) = [x(t), y(t), z(t)]^T$. El análisis profundo de estas curvas se centra en su <span class="highlight">continuidad paramétrica ($C^n$)</span>:</p>
-            <ul>
-                <li><b>$C^0$:</b> Continuidad posicional (las curvas se tocan).</li>
-                <li><b>$C^1$:</b> Continuidad de primer orden (los vectores tangentes coinciden). Evita cambios bruscos de dirección.</li>
-                <li><b>$C^2$:</b> Continuidad de curvatura. Es crucial en el diseño de superficies ópticas o carrocerías de alta gama para que los reflejos de luz sean fluidos.</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>2. Curvas de Bézier y Algoritmos</h2>
-            <p>Las curvas de Bézier se basan en los <b>Polinomios de Bernstein</b>. El grado de la curva depende del número de puntos de control ($n+1$). Para computar estas curvas de forma eficiente y estable, se utiliza el <b>Algoritmo de de Casteljau</b>, que emplea interpolaciones lineales repetidas.</p>
-            <p>Hoy en día, el estándar industrial son las <b>NURBS</b> (Non-Uniform Rational B-Splines), que permiten representar secciones cónicas exactas (como círculos perfectos) mediante el uso de pesos en los puntos de control.</p>
-        </div>
-
-        <div class="card">
-            <h2>Ejemplo Interactivo: Curva de Hipocicloide</h2>
-            <p>Este ejemplo muestra una curva paramétrica generada por un punto en un círculo que rueda dentro de otro. Representa trayectorias mecánicas complejas.</p>
-            <canvas id="hypoCanvas"></canvas>
-        </div>
+  <header>
+    <div class="wrap">
+      <h1>Curvas paramétricas en computación gráfica</h1>
+      <p class="lead">
+        Desarrollo conceptual, importancia, tipos, usos en computación gráfica,
+        ejemplo gráfico y bibliografía.
+      </p>
     </div>
+  </header>
 
-    <script>
-        const canvas = document.getElementById('hypoCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 600; canvas.height = 400;
+  <main class="wrap">
+    <section>
+      <h2>Concepto</h2>
 
-        function draw() {
-            ctx.clearRect(0,0,600,400);
-            ctx.strokeStyle = '#00d4ff';
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            
-            const R = 120, r = 35; // Radios de los círculos
-            const cx = 300, cy = 200;
+      <p>
+        Las curvas paramétricas son una forma de representación matemática en la que cada punto
+        de la curva se obtiene a partir de una o más funciones que dependen de un parámetro,
+        normalmente <em>t</em>. En términos formales, una curva puede verse como un mapeo desde
+        un intervalo de parámetros hacia el plano o el espacio, lo que permite expresar puntos
+        de la forma <em>P(t)</em> y describir trayectorias suaves tanto en 2D como en 3D.
+        <sup><a href="#ref1">[1]</a></sup><sup><a href="#ref2">[2]</a></sup>
+      </p>
 
-            for(let t = 0; t < Math.PI * 10; t += 0.05) {
-                // Ecuaciones paramétricas del Hipocicloide
-                let x = (R - r) * Math.cos(t) + r * Math.cos(((R - r) / r) * t);
-                let y = (R - r) * Math.sin(t) - r * Math.sin(((R - r) / r) * t);
-                
-                if(t === 0) ctx.moveTo(cx + x, cy + y);
-                else ctx.lineTo(cx + x, cy + y);
-            }
-            ctx.stroke();
-        }
-        draw();
-    </script>
+      <p>
+        En computación gráfica, esta representación es especialmente importante porque no se
+        trabaja solamente con figuras estáticas, sino con entidades geométricas que deben
+        editarse, interpolarse, animarse y finalmente visualizarse. Las curvas paramétricas
+        permiten modelar geometría continua con pocos datos de control, lo que mejora la
+        precisión del diseño y reduce la complejidad de almacenamiento frente a una
+        representación puramente discreta.
+        <sup><a href="#ref2">[2]</a></sup><sup><a href="#ref3">[3]</a></sup>
+      </p>
+
+      <p>
+        Además, la parametrización separa la forma geométrica del modo en que la curva se recorre.
+        Esto significa que el parámetro también puede interpretarse como tiempo en animación,
+        permitiendo describir trayectorias de movimiento, recorridos de cámara y desplazamientos
+        de objetos virtuales con suavidad controlada.
+        <sup><a href="#ref2">[2]</a></sup>
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Importancia</h3>
+          <p>
+            Las curvas paramétricas son importantes porque constituyen una base para el modelado
+            geométrico suave, la tipografía digital, la ilustración vectorial, la animación por
+            trayectorias y la construcción de superficies más complejas.
+            <sup><a href="#ref2">[2]</a></sup>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Dónde se usan</h3>
+          <p>
+            Se utilizan en software de diseño vectorial, sistemas CAD, edición de fuentes,
+            animación 2D y 3D, trayectorias de cámara y modelado de contornos. También aparecen
+            en procesos de teselación, porque una curva matemática debe discretizarse en
+            polilíneas antes de ser rasterizada.
+            <sup><a href="#ref2">[2]</a></sup>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Valor en gráficos</h3>
+          <p>
+            Su valor práctico está en que ofrecen continuidad, control de forma y facilidad de
+            evaluación. Esto permite refinar, subdividir o aproximar una curva según las
+            necesidades del renderizado.
+            <sup><a href="#ref1">[1]</a></sup><sup><a href="#ref2">[2]</a></sup>
+          </p>
+        </div>
+      </div>
+
+      <h3>Tipos principales</h3>
+      <p>
+        Entre las familias más importantes se encuentran las curvas de Bézier, Hermite,
+        B-spline y NURBS. Las curvas de Bézier son ampliamente utilizadas porque se definen
+        con pocos puntos de control y poseen propiedades geométricas muy útiles. Las B-splines
+        añaden mayor control local, de modo que al modificar un punto de control no se altera
+        toda la curva, sino solo una región específica.
+        <sup><a href="#ref2">[2]</a></sup><sup><a href="#ref3">[3]</a></sup>
+      </p>
+
+      <ul>
+        <li><strong>Bézier:</strong> muy utilizadas en gráficos vectoriales, modelado y animación.<sup><a href="#ref2">[2]</a></sup></li>
+        <li><strong>Hermite:</strong> adecuadas cuando interesa controlar posición y tangencia en los extremos.<sup><a href="#ref3">[3]</a></sup></li>
+        <li><strong>B-spline:</strong> permiten continuidad suave entre segmentos y mejor control local.<sup><a href="#ref3">[3]</a></sup></li>
+        <li><strong>NURBS:</strong> muy usadas en CAD por su alta precisión geométrica.<sup><a href="#ref4">[4]</a></sup></li>
+      </ul>
+
+      <h3>Usos en computación gráfica</h3>
+      <p>
+        En computación gráfica, las curvas paramétricas sirven para construir trayectorias de
+        animación, contornos de objetos, perfiles de extrusión, trayectorias de cámaras,
+        interpolación entre estados y generación de superficies.
+        <sup><a href="#ref2">[2]</a></sup>
+      </p>
+
+      <p>
+        Un aspecto técnico importante es la teselación. El hardware gráfico finalmente dibuja
+        segmentos y triángulos, no entidades matemáticas abstractas; por ello, las curvas
+        paramétricas se convierten en polilíneas mediante muestreo del parámetro.
+        <sup><a href="#ref2">[2]</a></sup>
+      </p>
+
+      <h3>Ejemplo gráfico</h3>
+      <figure class="graphic">
+        <svg width="900" height="360" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="900" height="360" fill="#fcfbf8"/>
+          <g stroke="#d8d2c8" stroke-width="1">
+            <line x1="70" y1="40" x2="70" y2="320"/>
+            <line x1="70" y1="320" x2="840" y2="320"/>
+            <line x1="70" y1="100" x2="840" y2="100"/>
+            <line x1="70" y1="180" x2="840" y2="180"/>
+            <line x1="70" y1="260" x2="840" y2="260"/>
+          </g>
+          <g font-family="Georgia, serif" font-size="14" fill="#5c5a56">
+            <text x="846" y="324">x</text>
+            <text x="54" y="42">y</text>
+            <text x="78" y="338">0</text>
+          </g>
+          <polyline points="120,280 260,80 560,90 760,250" fill="none" stroke="#ab6a18" stroke-width="3" stroke-dasharray="10 8"/>
+          <path d="M120 280 C260 80, 560 90, 760 250" fill="none" stroke="#0d6b72" stroke-width="5"/>
+          <g fill="#17363c">
+            <circle cx="120" cy="280" r="6"/>
+            <circle cx="260" cy="80" r="6"/>
+            <circle cx="560" cy="90" r="6"/>
+            <circle cx="760" cy="250" r="6"/>
+          </g>
+          <g font-family="Georgia, serif" font-size="16" fill="#22201c">
+            <text x="96" y="302">P1</text>
+            <text x="242" y="70">P2</text>
+            <text x="542" y="80">P3</text>
+            <text x="742" y="272">P4</text>
+            <text x="255" y="30" font-size="20" fill="#0d6b72">Curva de Bézier cúbica</text>
+          </g>
+        </svg>
+        <figcaption>
+          Ejemplo gráfico de una curva de Bézier cúbica. La línea punteada representa
+          el polígono de control y la línea continua representa la curva paramétrica.
+        </figcaption>
+      </figure>
+
+      <div class="refs">
+        <h3>Bibliografía</h3>
+        <ol>
+          <li id="ref1">Universidad Complutense de Madrid. <em>Curvas paramétricas en el plano</em>. Disponible en:
+            <a href="https://blogs.mat.ucm.es/matematicas-utiles/curvas-parametricas-en-el-plano/" target="_blank" rel="noopener noreferrer">
+              https://blogs.mat.ucm.es/matematicas-utiles/curvas-parametricas-en-el-plano/
+            </a>
+          </li>
+          <li id="ref2">Matusik, W. <em>Bézier Curves and Splines</em>. MIT OpenCourseWare, 6.837 Computer Graphics. Disponible en:
+            <a href="https://ocw.mit.edu/courses/6-837-computer-graphics-fall-2012/aba8735cf2cf7c71ca5d29b46873309a_MIT6_837F12_Lec01.pdf" target="_blank" rel="noopener noreferrer">
+              MIT OCW PDF
+            </a>
+          </li>
+          <li id="ref3">University of New Mexico. <em>Bezier and Spline Curves and Surfaces</em>. Disponible en:
+            <a href="https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_07.pdf" target="_blank" rel="noopener noreferrer">
+              https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_07.pdf
+            </a>
+          </li>
+          <li id="ref4">Universidad del País Vasco. <em>Parametrización y representación gráfica de superficies construidas</em>. Disponible en:
+            <a href="https://ocw.ehu.eus/pluginfile.php/56681/mod_resource/content/3/OCW2020Tema03_Material%20estudio.pdf" target="_blank" rel="noopener noreferrer">
+              OCW EHU
+            </a>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

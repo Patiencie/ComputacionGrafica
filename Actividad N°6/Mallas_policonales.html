@@ -1,76 +1,274 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investigación: Geometría de Mallas Poligonales</title>
-    <style>
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.7; }
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
-        .btn-regresar { position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 10px 18px; background: #58a6ff; color: #fff; text-decoration: none; border-radius: 4px; font-weight: bold; }
-        h1 { color: #58a6ff; font-size: 2.2rem; text-align: center; border-bottom: 1px solid #30363d; padding-bottom: 20px; }
-        h2 { color: #58a6ff; margin-top: 40px; }
-        .box { background: #161b22; padding: 25px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 30px; }
-        .highlight { color: #58a6ff; }
-        #viewer3d { width: 100%; height: 400px; background: #000; border-radius: 8px; border: 1px solid #58a6ff; margin-top: 20px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mallas Poligonales en Computación Gráfica</title>
+  <style>
+    :root {
+      --bg: #f7f6f2;
+      --surface: #ffffff;
+      --surface-2: #f1efe9;
+      --text: #22201c;
+      --muted: #5c5a56;
+      --accent: #0d6b72;
+      --accent-2: #ab6a18;
+      --border: #d7d2c8;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --max: 1080px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(135deg, #0d6b72, #17434a);
+      color: white;
+      padding: 56px 24px;
+    }
+    .wrap { max-width: var(--max); margin: 0 auto; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1 { font-size: 2.3rem; margin: 0 0 12px; }
+    h2 {
+      font-size: 1.9rem;
+      margin-top: 0;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 8px;
+    }
+    h3 { font-size: 1.2rem; margin-top: 28px; color: #17363c; }
+    main { padding: 28px 24px 64px; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      margin: 22px auto;
+      box-shadow: var(--shadow);
+    }
+    p { margin: 12px 0; text-align: justify; }
+    .lead { font-size: 1.08rem; max-width: 80ch; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    ul { margin: 8px 0 0 20px; }
+    li { margin-bottom: 8px; }
+    .graphic {
+      margin-top: 22px;
+      background: #fcfbf8;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      overflow-x: auto;
+    }
+    figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .refs ol { padding-left: 22px; }
+    .refs li { margin-bottom: 10px; }
+    sup a { color: var(--accent); text-decoration: none; }
+    a { color: var(--accent); }
+  </style>
 </head>
 <body>
-
-    <a href="javascript:history.back()" class="btn-regresar">← Volver</a>
-
-    <div class="container">
-        <h1>Mallas Poligonales y Topología 3D</h1>
-        <p style="text-align:center; opacity:0.5;">Ingeniería de Sistemas - Jhon Anderson Quispe Mamani</p>
-
-        <div class="box">
-            <h2>1. Estructura de Datos de la Malla</h2>
-            <p>Una malla poligonal es una colección de vértices $V$, aristas $E$ y caras $F$. En computación gráfica profesional, no basta con listar los polígonos; se requiere manejar la <span class="highlight">Topología Manifold</span>.</p>
-            <p>Esto asegura que la superficie sea matemáticamente cerrada y coherente. El uso de <b>caras triangulares</b> es el estándar para la GPU porque tres puntos siempre son coplanares, lo que simplifica drásticamente el proceso de <b>rasterización</b>.</p>
-        </div>
-
-        <div class="box">
-            <h2>2. Normales y Modelos de Sombreado</h2>
-            <p>La apariencia de una malla depende del cálculo de las <b>Normales de Superficie</b>. Existen tres modelos principales de interpolación de luz:</p>
-            <ul>
-                <li><b>Flat Shading:</b> Una normal por cara (apariencia facetada).</li>
-                <li><b>Gouraud Shading:</b> Promedia las normales en los vértices (suavizado básico).</li>
-                <li><b>Phong Shading:</b> Interpola las normales por cada píxel (máximo realismo y reflejos especulares definidos).</li>
-            </ul>
-        </div>
-
-        <div class="box">
-            <h2>Ejemplo 3D: Malla de Nudo Toroidal</h2>
-            <p>Visualización de una estructura compleja (Knot) para observar cómo los polígonos se adaptan a curvaturas extremas mediante una malla densa.</p>
-            <div id="viewer3d"></div>
-        </div>
+  <header>
+    <div class="wrap">
+      <h1>Mallas poligonales en computación gráfica</h1>
+      <p class="lead">
+        Desarrollo conceptual, importancia, tipos, usos en computación gráfica,
+        ejemplo gráfico y bibliografía.
+      </p>
     </div>
+  </header>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        const container = document.getElementById('viewer3d');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        container.appendChild(renderer.domElement);
+  <main class="wrap">
+    <section>
+      <h2>Concepto</h2>
 
-        // Geometría compleja: Nudo Toroidal
-        const geometry = new THREE.TorusKnotGeometry(1, 0.35, 100, 16);
-        const material = new THREE.MeshBasicMaterial({ color: 0x58a6ff, wireframe: true });
-        const knot = new THREE.Mesh(geometry, material);
-        scene.add(knot);
+      <p>
+        Una malla poligonal es una representación discreta de una superficie compuesta por
+        vértices, aristas y caras, donde la conectividad entre estos elementos define la forma
+        geométrica de un objeto tridimensional. En computación gráfica, las mallas poligonales
+        son la estructura dominante para representar superficies 3D, ya que se adaptan
+        eficientemente a los algoritmos de renderizado y al procesamiento del hardware gráfico
+        moderno.<sup><a href="#ref1">[1]</a></sup><sup><a href="#ref2">[2]</a></sup>
+      </p>
 
-        camera.position.z = 5;
+      <p>
+        Su relevancia proviene de que ofrecen una forma práctica de aproximar superficies
+        continuas mediante entidades discretas. Aunque una superficie matemática puede ser suave
+        y analítica, una GPU trabaja de manera especialmente eficiente con triángulos y listas de
+        vértices, por lo que las mallas constituyen el puente entre el modelado geométrico y la
+        visualización final en pantalla.<sup><a href="#ref2">[2]</a></sup><sup><a href="#ref3">[3]</a></sup>
+      </p>
 
-        function animate() {
-            requestAnimationFrame(animate);
-            knot.rotation.y += 0.01;
-            knot.rotation.x += 0.005;
-            renderer.render(scene, camera);
-        }
-        animate();
-    </script>
+      <p>
+        En un sentido más amplio, una malla no es solo una colección de polígonos aislados;
+        también es una estructura topológica. Su utilidad depende no solo de la posición de sus
+        vértices, sino de cómo estos se conectan entre sí. Por ello, la investigación en
+        computación gráfica ha dado gran importancia a las estructuras de datos que almacenan
+        conectividad de manera eficiente, como las estructuras half-edge.
+        <sup><a href="#ref1">[1]</a></sup><sup><a href="#ref4">[4]</a></sup>
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Importancia</h3>
+          <p>
+            Las mallas poligonales son esenciales porque constituyen la forma estándar de
+            representar modelos 3D en videojuegos, simuladores, animación y visualización
+            científica. Su compatibilidad con la rasterización y con el procesamiento paralelo de
+            la GPU las hace indispensables en tiempo real.
+            <sup><a href="#ref2">[2]</a></sup><sup><a href="#ref3">[3]</a></sup>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Dónde se usan</h3>
+          <p>
+            Se utilizan en motores gráficos, software de modelado 3D, cine digital, realidad
+            virtual, reconstrucción 3D e impresión aditiva. También son frecuentes en
+            procesamiento geométrico para simplificación, subdivisión, suavizado y análisis de
+            superficies.<sup><a href="#ref3">[3]</a></sup><sup><a href="#ref4">[4]</a></sup>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Valor en gráficos</h3>
+          <p>
+            Su mayor fortaleza es el equilibrio entre expresividad geométrica y eficiencia
+            computacional. Una malla puede aproximar casi cualquier superficie y, al mismo tiempo,
+            ser manipulada por algoritmos bien establecidos de iluminación, texturizado, colisión
+            y deformación.<sup><a href="#ref2">[2]</a></sup><sup><a href="#ref4">[4]</a></sup>
+          </p>
+        </div>
+      </div>
+
+      <h3>Elementos y tipos</h3>
+      <p>
+        Los elementos básicos de una malla son los vértices, las aristas y las caras. Los
+        vértices almacenan coordenadas y, con frecuencia, atributos adicionales como normales,
+        color o coordenadas de textura; las aristas codifican relaciones entre pares de vértices;
+        y las caras agrupan vértices en polígonos que delimitan la superficie visible del objeto.
+        <sup><a href="#ref3">[3]</a></sup><sup><a href="#ref4">[4]</a></sup>
+      </p>
+
+      <p>
+        En la práctica, las mallas triangulares son las más comunes porque cualquier polígono
+        puede descomponerse en triángulos y estos son geométricamente estables para el
+        renderizado. También se emplean mallas de quads en modelado y animación, así como mallas
+        manifold y no-manifold según la validez topológica de la conectividad.
+        <sup><a href="#ref2">[2]</a></sup><sup><a href="#ref4">[4]</a></sup>
+      </p>
+
+      <ul>
+        <li><strong>Malla triangular:</strong> la más compatible con GPU y rasterización.<sup><a href="#ref2">[2]</a></sup></li>
+        <li><strong>Malla de quads:</strong> útil para modelado orgánico y subdivisión.<sup><a href="#ref3">[3]</a></sup></li>
+        <li><strong>Malla manifold:</strong> topológicamente consistente y fácil de procesar.<sup><a href="#ref1">[1]</a></sup></li>
+        <li><strong>Malla no-manifold:</strong> presenta configuraciones problemáticas para algunos algoritmos.<sup><a href="#ref1">[1]</a></sup></li>
+      </ul>
+
+      <h3>Usos en computación gráfica</h3>
+      <p>
+        Las mallas poligonales se emplean para representar personajes, escenarios, objetos,
+        terrenos y prácticamente cualquier geometría visible en un entorno 3D. Además, son la
+        base para técnicas como mapeo de texturas, sombreado, animación por esqueleto, detección
+        de colisiones y simulación física.<sup><a href="#ref2">[2]</a></sup><sup><a href="#ref4">[4]</a></sup>
+      </p>
+
+      <p>
+        Otro aspecto fundamental es la estructura de datos empleada. La representación half-edge,
+        ampliamente documentada en literatura y software académico, divide cada arista en dos
+        semiaristas dirigidas, lo que permite recorrer eficientemente caras adyacentes, vecinos
+        de un vértice y relaciones topológicas locales.
+        <sup><a href="#ref1">[1]</a></sup><sup><a href="#ref4">[4]</a></sup>
+      </p>
+
+      <h3>Ejemplo gráfico</h3>
+      <figure class="graphic">
+        <svg width="900" height="380" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+          <rect width="900" height="380" fill="#fcfbf8"/>
+          <g transform="translate(90,40)">
+            <g stroke="#cfc8bc" stroke-width="1">
+              <line x1="0" y1="270" x2="720" y2="270"/>
+            </g>
+            <g fill="none" stroke="#0d6b72" stroke-width="2.4">
+              <polygon points="80,220 180,120 280,220"/>
+              <polygon points="180,120 280,220 380,105"/>
+              <polygon points="280,220 380,105 480,215"/>
+              <polygon points="380,105 480,215 590,135"/>
+              <polygon points="180,120 130,250 80,220"/>
+              <polygon points="180,120 230,250 280,220"/>
+              <polygon points="380,105 330,250 280,220"/>
+              <polygon points="380,105 430,250 480,215"/>
+              <polygon points="590,135 540,250 480,215"/>
+            </g>
+            <g fill="#ab6a18">
+              <circle cx="80" cy="220" r="5"/>
+              <circle cx="180" cy="120" r="5"/>
+              <circle cx="280" cy="220" r="5"/>
+              <circle cx="380" cy="105" r="5"/>
+              <circle cx="480" cy="215" r="5"/>
+              <circle cx="590" cy="135" r="5"/>
+              <circle cx="130" cy="250" r="5"/>
+              <circle cx="230" cy="250" r="5"/>
+              <circle cx="330" cy="250" r="5"/>
+              <circle cx="430" cy="250" r="5"/>
+              <circle cx="540" cy="250" r="5"/>
+            </g>
+            <g font-family="Georgia, serif" font-size="16" fill="#22201c">
+              <text x="0" y="24" font-size="20" fill="#0d6b72">Ejemplo de malla triangular</text>
+              <text x="603" y="138">vértice</text>
+              <text x="300" y="293">aristas y caras triangulares</text>
+            </g>
+          </g>
+        </svg>
+        <figcaption>
+          Ejemplo gráfico de una malla poligonal triangular. Los puntos representan vértices y
+          los segmentos representan aristas que delimitan caras triangulares.
+        </figcaption>
+      </figure>
+
+      <div class="refs">
+        <h3>Bibliografía</h3>
+        <ol>
+          <li id="ref1">OpenMesh Documentation. <em>The Halfedge Data Structure</em>. RWTH Aachen University. Disponible en:
+            <a href="https://www.graphics.rwth-aachen.de/media/openmesh_static/Documentations/OpenMesh-6.3-Documentation/a00010.html" target="_blank" rel="noopener noreferrer">
+              OpenMesh documentation
+            </a>
+          </li>
+          <li id="ref2">Scratchapixel. <em>Introduction to Polygon Meshes</em>. Disponible en:
+            <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-polygon-mesh/introduction.html" target="_blank" rel="noopener noreferrer">
+              https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-polygon-mesh/introduction.html
+            </a>
+          </li>
+          <li id="ref3">Princeton University. <em>Polygonal Meshes</em>. Disponible en:
+            <a href="https://www.cs.princeton.edu/courses/archive/fall16/cos526/lectures/14-mesh.pdf" target="_blank" rel="noopener noreferrer">
+              Princeton mesh notes
+            </a>
+          </li>
+          <li id="ref4">Botsch, M.; Kobbelt, L.; Pauly, M.; Alliez, P.; Lévy, B. <em>Polygon Mesh Processing</em>. Complementado con:
+            <a href="https://graphics.rwth-aachen.de/media/papers/tutorial1.pdf" target="_blank" rel="noopener noreferrer">
+              Geometric Modeling Based on Polygonal Meshes
+            </a>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

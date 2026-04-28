@@ -37,7 +37,6 @@
     .wrap {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 0 24px;
     }
 
     h1, h2, h3 {
@@ -63,7 +62,7 @@
     }
 
     main {
-      padding: 28px 0 64px;
+      padding: 28px 24px 64px;
     }
 
     section {
@@ -115,12 +114,17 @@
       margin-bottom: 10px;
     }
 
+    sup a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
     a {
       color: var(--accent);
     }
 
     .btn-volver {
-      margin: 22px 24px 0;
+      margin: 22px 0 0;
       background: var(--accent);
       color: white;
       border: none;
@@ -144,7 +148,7 @@
 
     .canvas-3d {
       margin-top: 22px;
-      background: #000;
+      background: #0b0f14;
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
@@ -152,28 +156,33 @@
       height: 520px;
     }
 
-    .canvas-3d canvas {
-      display: block;
-    }
-
-    titulo {
+    .canvas-3d .overlay {
       position: absolute;
-      top: 20px;
+      top: 14px;
       width: 100%;
       text-align: center;
       color: white;
-      pointer-events: none;
       z-index: 10;
+      pointer-events: none;
       font-family: 'Segoe UI', Arial, sans-serif;
     }
 
-    titulo h2 {
+    .canvas-3d .overlay h4 {
       margin: 0;
-      font-size: 1.2rem;
-      font-weight: 400;
-      border: none;
-      color: white;
-      padding: 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .canvas-3d .overlay p {
+      margin: 4px 0 0;
+      text-align: center;
+      color: #d7d7d7;
+      font-size: 0.92rem;
+    }
+
+    #canvasCurva {
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
@@ -188,7 +197,9 @@
     </div>
   </header>
 
-  <button class="btn-volver" onclick="history.back()">← Volver a la página anterior</button>
+  <div class="wrap">
+    <button class="btn-volver" onclick="history.back()">← Volver a la página anterior</button>
+  </div>
 
   <main class="wrap">
     <section>
@@ -281,14 +292,16 @@
       <p>
         El siguiente ejemplo usa Three.js para representar una curva Bézier cúbica 3D mediante
         la clase <code>CubicBezierCurve3</code>, que construye una curva a partir de un punto
-        inicial, dos puntos de control y un punto final.
+        inicial, dos puntos de control y un punto final. En el ejemplo, los puntos de control
+        se animan para mostrar cómo cambia la curva en tiempo real.
       </p>
 
-      <div class="canvas-3d" id="ejemplo-curva">
-        <titulo>
-          <h2>Ejemplo: Curva paramétrica Bézier 3D</h2>
-          <h2>Realizado por: Jhon Anderson Quispe Mamani</h2>
-        </titulo>
+      <div class="canvas-3d">
+        <div class="overlay">
+          <h4>Ejemplo Three.js: Curva Bézier 3D</h4>
+          <p>Curva paramétrica con puntos de control animados</p>
+        </div>
+        <div id="canvasCurva"></div>
       </div>
 
       <div class="refs">
@@ -326,83 +339,100 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    // CREAR LA ESCENA
+    const contenedorCurva = document.getElementById('canvasCurva');
+
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0b0f14);
 
-    // CREAR UNA CAMARA
-    const camera = new THREE.PerspectiveCamera(33, window.innerWidth / 520, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(45, contenedorCurva.clientWidth / 520, 0.1, 1000);
+    camera.position.set(0, 4, 16);
 
-    // CREAR UN RENDERIZADOR
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(document.getElementById('ejemplo-curva').clientWidth, 520);
-    document.getElementById('ejemplo-curva').appendChild(renderer.domElement);
+    renderer.setSize(contenedorCurva.clientWidth, 520);
+    contenedorCurva.appendChild(renderer.domElement);
 
-    // CREAR LOS PUNTOS DE LA CURVA
-    const p0 = new THREE.Vector3(-6, 0, 0);
-    const p1 = new THREE.Vector3(-2, 4, 0);
-    const p2 = new THREE.Vector3(2, -4, 0);
-    const p3 = new THREE.Vector3(6, 0, 0);
+    const luzAmbiental = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(luzAmbiental);
 
-    // CREAR LA CURVA BEZIER
-    const curva = new THREE.CubicBezierCurve3(p0, p1, p2, p3);
+    const luzDireccional = new THREE.DirectionalLight(0xffffff, 1);
+    luzDireccional.position.set(5, 10, 7);
+    scene.add(luzDireccional);
 
-    // OBTENER LOS PUNTOS DE LA CURVA
-    const puntos = curva.getPoints(100);
-    const geometry = new THREE.BufferGeometry().setFromPoints(puntos);
+    const axesHelper = new THREE.AxesHelper(5);
+    scene.add(axesHelper);
 
-    // CREAR EL MATERIAL DE LA CURVA
-    const material = new THREE.LineBasicMaterial({ color: 0x00ffff });
+    const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
+    scene.add(gridHelper);
 
-    // CREAR LA LINEA DE LA CURVA
-    const linea = new THREE.Line(geometry, material);
-    scene.add(linea);
+    let lineaCurva, lineaControl;
+    const esferasControl = [];
 
-    // CREAR LOS PUNTOS DE CONTROL
-    const esferaGeometria = new THREE.SphereGeometry(0.15, 16, 16);
-    const esferaMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    const materialCurva = new THREE.LineBasicMaterial({ color: 0x00ffff });
+    const materialControl = new THREE.LineDashedMaterial({
+      color: 0xffaa00,
+      dashSize: 0.3,
+      gapSize: 0.2
+    });
 
-    const punto1 = new THREE.Mesh(esferaGeometria, esferaMaterial);
-    punto1.position.copy(p0);
-    scene.add(punto1);
+    const materialPunto = new THREE.MeshBasicMaterial({ color: 0xff3355 });
+    const geometriaPunto = new THREE.SphereGeometry(0.15, 16, 16);
 
-    const punto2 = new THREE.Mesh(esferaGeometria, esferaMaterial);
-    punto2.position.copy(p1);
-    scene.add(punto2);
+    for (let i = 0; i < 4; i++) {
+      const esfera = new THREE.Mesh(geometriaPunto, materialPunto);
+      esferasControl.push(esfera);
+      scene.add(esfera);
+    }
 
-    const punto3 = new THREE.Mesh(esferaGeometria, esferaMaterial);
-    punto3.position.copy(p2);
-    scene.add(punto3);
+    function crearCurva(tiempo) {
+      const p0 = new THREE.Vector3(-6, 0, 0);
+      const p1 = new THREE.Vector3(-2, 4 * Math.sin(tiempo), 0);
+      const p2 = new THREE.Vector3(2, 4 * Math.cos(tiempo), 0);
+      const p3 = new THREE.Vector3(6, 0, 0);
 
-    const punto4 = new THREE.Mesh(esferaGeometria, esferaMaterial);
-    punto4.position.copy(p3);
-    scene.add(punto4);
+      esferasControl[0].position.copy(p0);
+      esferasControl[1].position.copy(p1);
+      esferasControl[2].position.copy(p2);
+      esferasControl[3].position.copy(p3);
 
-    // POSICIONAR LA CAMARA
-    camera.position.z = 14;
+      const curva = new THREE.CubicBezierCurve3(p0, p1, p2, p3);
+      const puntosCurva = curva.getPoints(100);
+      const geometriaCurva = new THREE.BufferGeometry().setFromPoints(puntosCurva);
 
-    // ANIMACIÓN
+      if (lineaCurva) {
+        scene.remove(lineaCurva);
+        lineaCurva.geometry.dispose();
+      }
+
+      lineaCurva = new THREE.Line(geometriaCurva, materialCurva);
+      scene.add(lineaCurva);
+
+      const puntosControl = [p0, p1, p2, p3];
+      const geometriaControl = new THREE.BufferGeometry().setFromPoints(puntosControl);
+
+      if (lineaControl) {
+        scene.remove(lineaControl);
+        lineaControl.geometry.dispose();
+      }
+
+      lineaControl = new THREE.Line(geometriaControl, materialControl);
+      lineaControl.computeLineDistances();
+      scene.add(lineaControl);
+    }
+
     function animate() {
       requestAnimationFrame(animate);
-
-      // ROTAR LA CURVA
-      linea.rotation.y += 0.01;
-
-      // ROTAR LOS PUNTOS DE CONTROL
-      punto1.rotation.y += 0.01;
-      punto2.rotation.y += 0.01;
-      punto3.rotation.y += 0.01;
-      punto4.rotation.y += 0.01;
-
-      // DIBUJAR LA ESCENA
+      const tiempo = performance.now() * 0.001;
+      crearCurva(tiempo);
+      scene.rotation.y += 0.003;
       renderer.render(scene, camera);
     }
 
     animate();
 
     window.addEventListener('resize', () => {
-      camera.aspect = document.getElementById('ejemplo-curva').clientWidth / 520;
+      camera.aspect = contenedorCurva.clientWidth / 520;
       camera.updateProjectionMatrix();
-      renderer.setSize(document.getElementById('ejemplo-curva').clientWidth, 520);
+      renderer.setSize(contenedorCurva.clientWidth, 520);
     });
   </script>
 </body>

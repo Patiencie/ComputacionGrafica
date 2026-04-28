@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mallas Poligonales en Computación Gráfica</title>
+  <title>Curvas Paramétricas en Computación Gráfica</title>
   <style>
     :root {
       --bg: #f7f6f2;
@@ -17,7 +17,9 @@
       --shadow: 0 10px 30px rgba(0,0,0,.08);
       --max: 1080px;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
@@ -25,22 +27,44 @@
       color: var(--text);
       line-height: 1.7;
     }
+
     header {
       background: linear-gradient(135deg, #0d6b72, #17434a);
       color: white;
       padding: 56px 24px;
     }
-    .wrap { max-width: var(--max); margin: 0 auto; }
-    h1, h2, h3 { line-height: 1.2; }
-    h1 { font-size: 2.3rem; margin: 0 0 12px; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin: 0 0 12px;
+    }
+
     h2 {
       font-size: 1.9rem;
       margin-top: 0;
       border-bottom: 3px solid var(--accent);
       padding-bottom: 8px;
     }
-    h3 { font-size: 1.2rem; margin-top: 28px; color: #17363c; }
-    main { padding: 28px 24px 64px; }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-top: 28px;
+      color: #17363c;
+    }
+
+    main {
+      padding: 28px 24px 64px;
+    }
+
     section {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -49,26 +73,78 @@
       margin: 22px auto;
       box-shadow: var(--shadow);
     }
-    p { margin: 12px 0; text-align: justify; }
-    .lead { font-size: 1.08rem; max-width: 80ch; }
+
+    p {
+      margin: 12px 0;
+      text-align: justify;
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      max-width: 80ch;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 18px;
       margin-top: 18px;
     }
+
     .card {
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 18px;
     }
-    ul { margin: 8px 0 0 20px; }
-    li { margin-bottom: 8px; }
-    .refs ol { padding-left: 22px; }
-    .refs li { margin-bottom: 10px; }
-    sup a { color: var(--accent); text-decoration: none; }
-    a { color: var(--accent); }
+
+    ul {
+      margin: 8px 0 0 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .refs ol {
+      padding-left: 22px;
+    }
+
+    .refs li {
+      margin-bottom: 10px;
+    }
+
+    sup a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .btn-volver {
+      margin: 22px 0 0;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      box-shadow: var(--shadow);
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .btn-volver:hover {
+      background: #09545a;
+      transform: translateY(-2px);
+    }
+
+    .btn-volver:active {
+      transform: translateY(0);
+    }
 
     .canvas-3d {
       margin-top: 22px;
@@ -79,6 +155,7 @@
       position: relative;
       height: 520px;
     }
+
     .canvas-3d .overlay {
       position: absolute;
       top: 14px;
@@ -89,18 +166,21 @@
       pointer-events: none;
       font-family: 'Segoe UI', Arial, sans-serif;
     }
+
     .canvas-3d .overlay h4 {
       margin: 0;
       font-size: 1.1rem;
       font-weight: 500;
     }
+
     .canvas-3d .overlay p {
       margin: 4px 0 0;
       text-align: center;
       color: #d7d7d7;
       font-size: 0.92rem;
     }
-    #canvasMalla {
+
+    #canvasCurva {
       width: 100%;
       height: 100%;
     }
@@ -109,7 +189,7 @@
 <body>
   <header>
     <div class="wrap">
-      <h1>Mallas poligonales en computación gráfica</h1>
+      <h1>Curvas paramétricas en computación gráfica</h1>
       <p class="lead">
         Desarrollo conceptual, importancia, tipos, usos en computación gráfica,
         ejemplo gráfico y bibliografía.
@@ -117,158 +197,139 @@
     </div>
   </header>
 
+  <div class="wrap">
+    <button class="btn-volver" onclick="history.back()">← Volver a la página anterior</button>
+  </div>
+
   <main class="wrap">
     <section>
       <h2>Concepto</h2>
 
       <p>
-        Una malla poligonal es una representación discreta de una superficie compuesta por
-        vértices, aristas y caras, donde la conectividad entre estos elementos define la forma
-        geométrica de un objeto tridimensional. En computación gráfica, las mallas poligonales
-        son la estructura dominante para representar superficies 3D, ya que se adaptan
-        eficientemente a los algoritmos de renderizado y al procesamiento del hardware gráfico
-        moderno.<sup><a href="#ref1">[1]</a></sup><sup><a href="#ref2">[2]</a></sup>
+        Las curvas paramétricas son una forma de representación matemática en la que cada punto
+        de la curva se obtiene a partir de una o más funciones que dependen de un parámetro,
+        normalmente <em>t</em>. En términos formales, una curva puede verse como un mapeo desde
+        un intervalo de parámetros hacia el plano o el espacio, lo que permite expresar puntos
+        de la forma <em>P(t)</em> y describir trayectorias suaves tanto en 2D como en 3D.
       </p>
 
       <p>
-        Su relevancia proviene de que ofrecen una forma práctica de aproximar superficies
-        continuas mediante entidades discretas. Aunque una superficie matemática puede ser suave
-        y analítica, una GPU trabaja de manera especialmente eficiente con triángulos y listas de
-        vértices, por lo que las mallas constituyen el puente entre el modelado geométrico y la
-        visualización final en pantalla.<sup><a href="#ref2">[2]</a></sup><sup><a href="#ref3">[3]</a></sup>
+        En computación gráfica, esta representación es especialmente importante porque no se
+        trabaja solamente con figuras estáticas, sino con entidades geométricas que deben
+        editarse, interpolarse, animarse y finalmente visualizarse. Las curvas paramétricas
+        permiten modelar geometría continua con pocos datos de control, lo que mejora la
+        precisión del diseño y reduce la complejidad de almacenamiento frente a una
+        representación puramente discreta.
       </p>
 
       <p>
-        En un sentido más amplio, una malla no es solo una colección de polígonos aislados;
-        también es una estructura topológica. Su utilidad depende no solo de la posición de sus
-        vértices, sino de cómo estos se conectan entre sí. Por ello, la investigación en
-        computación gráfica ha dado gran importancia a las estructuras de datos que almacenan
-        conectividad de manera eficiente, como las estructuras half-edge.
-        <sup><a href="#ref1">[1]</a></sup><sup><a href="#ref4">[4]</a></sup>
+        Además, la parametrización separa la forma geométrica del modo en que la curva se recorre.
+        Esto significa que el parámetro también puede interpretarse como tiempo en animación,
+        permitiendo describir trayectorias de movimiento, recorridos de cámara y desplazamientos
+        de objetos virtuales con suavidad controlada.
       </p>
 
       <div class="grid">
         <div class="card">
           <h3>Importancia</h3>
           <p>
-            Las mallas poligonales son esenciales porque constituyen la forma estándar de
-            representar modelos 3D en videojuegos, simuladores, animación y visualización
-            científica. Su compatibilidad con la rasterización y con el procesamiento paralelo de
-            la GPU las hace indispensables en tiempo real.
-            <sup><a href="#ref2">[2]</a></sup><sup><a href="#ref3">[3]</a></sup>
+            Las curvas paramétricas son importantes porque constituyen una base para el modelado
+            geométrico suave, la tipografía digital, la ilustración vectorial, la animación por
+            trayectorias y la construcción de superficies más complejas.
           </p>
         </div>
 
         <div class="card">
           <h3>Dónde se usan</h3>
           <p>
-            Se utilizan en motores gráficos, software de modelado 3D, cine digital, realidad
-            virtual, reconstrucción 3D e impresión aditiva. También son frecuentes en
-            procesamiento geométrico para simplificación, subdivisión, suavizado y análisis de
-            superficies.<sup><a href="#ref3">[3]</a></sup><sup><a href="#ref4">[4]</a></sup>
+            Se utilizan en software de diseño vectorial, sistemas CAD, edición de fuentes,
+            animación 2D y 3D, trayectorias de cámara y modelado de contornos. También aparecen
+            en procesos de teselación, porque una curva matemática debe discretizarse en
+            polilíneas antes de ser rasterizada.
           </p>
         </div>
 
         <div class="card">
           <h3>Valor en gráficos</h3>
           <p>
-            Su mayor fortaleza es el equilibrio entre expresividad geométrica y eficiencia
-            computacional. Una malla puede aproximar casi cualquier superficie y, al mismo tiempo,
-            ser manipulada por algoritmos bien establecidos de iluminación, texturizado, colisión
-            y deformación.<sup><a href="#ref2">[2]</a></sup><sup><a href="#ref4">[4]</a></sup>
+            Su valor práctico está en que ofrecen continuidad, control de forma y facilidad de
+            evaluación. Esto permite refinar, subdividir o aproximar una curva según las
+            necesidades del renderizado.
           </p>
         </div>
       </div>
 
-      <h3>Elementos y tipos</h3>
+      <h3>Tipos principales</h3>
       <p>
-        Los elementos básicos de una malla son los vértices, las aristas y las caras. Los
-        vértices almacenan coordenadas y, con frecuencia, atributos adicionales como normales,
-        color o coordenadas de textura; las aristas codifican relaciones entre pares de vértices;
-        y las caras agrupan vértices en polígonos que delimitan la superficie visible del objeto.
-        <sup><a href="#ref3">[3]</a></sup><sup><a href="#ref4">[4]</a></sup>
-      </p>
-
-      <p>
-        En la práctica, las mallas triangulares son las más comunes porque cualquier polígono
-        puede descomponerse en triángulos y estos son geométricamente estables para el
-        renderizado. También se emplean mallas de quads en modelado y animación, así como mallas
-        manifold y no-manifold según la validez topológica de la conectividad.
-        <sup><a href="#ref2">[2]</a></sup><sup><a href="#ref4">[4]</a></sup>
+        Entre las familias más importantes se encuentran las curvas de Bézier, Hermite,
+        B-spline y NURBS. Las curvas de Bézier son ampliamente utilizadas porque se definen
+        con pocos puntos de control y poseen propiedades geométricas muy útiles. Las B-splines
+        añaden mayor control local, de modo que al modificar un punto de control no se altera
+        toda la curva, sino solo una región específica.
       </p>
 
       <ul>
-        <li><strong>Malla triangular:</strong> la más compatible con GPU y rasterización.<sup><a href="#ref2">[2]</a></sup></li>
-        <li><strong>Malla de quads:</strong> útil para modelado orgánico y subdivisión.<sup><a href="#ref3">[3]</a></sup></li>
-        <li><strong>Malla manifold:</strong> topológicamente consistente y fácil de procesar.<sup><a href="#ref1">[1]</a></sup></li>
-        <li><strong>Malla no-manifold:</strong> presenta configuraciones problemáticas para algunos algoritmos.<sup><a href="#ref1">[1]</a></sup></li>
+        <li><strong>Bézier:</strong> muy utilizadas en gráficos vectoriales, modelado y animación.</li>
+        <li><strong>Hermite:</strong> adecuadas cuando interesa controlar posición y tangencia en los extremos.</li>
+        <li><strong>B-spline:</strong> permiten continuidad suave entre segmentos y mejor control local.</li>
+        <li><strong>NURBS:</strong> muy usadas en CAD por su alta precisión geométrica.</li>
       </ul>
 
       <h3>Usos en computación gráfica</h3>
       <p>
-        Las mallas poligonales se emplean para representar personajes, escenarios, objetos,
-        terrenos y prácticamente cualquier geometría visible en un entorno 3D. Además, son la
-        base para técnicas como mapeo de texturas, sombreado, animación por esqueleto, detección
-        de colisiones y simulación física.<sup><a href="#ref3">[3]</a></sup><sup><a href="#ref4">[4]</a></sup>
+        En computación gráfica, las curvas paramétricas sirven para construir trayectorias de
+        animación, contornos de objetos, perfiles de extrusión, trayectorias de cámaras,
+        interpolación entre estados y generación de superficies.
       </p>
 
       <p>
-        Otro aspecto fundamental es la estructura de datos empleada. La representación half-edge,
-        ampliamente documentada en literatura y software académico, divide cada arista en dos
-        semiaristas dirigidas, lo que permite recorrer eficientemente caras adyacentes, vecinos
-        de un vértice y relaciones topológicas locales.<sup><a href="#ref1">[1]</a></sup><sup><a href="#ref4">[4]</a></sup>
+        Un aspecto técnico importante es la teselación. El hardware gráfico finalmente dibuja
+        segmentos y triángulos, no entidades matemáticas abstractas; por ello, las curvas
+        paramétricas se convierten en polilíneas mediante muestreo del parámetro.
       </p>
 
       <h3>Ejemplo gráfico en computación gráfica</h3>
       <p>
-        El ejemplo siguiente usa una geometría 3D y visualiza sus aristas con
-        <code>EdgesGeometry</code>, una clase de Three.js que genera una geometría de líneas a partir
-        de los bordes de otra geometría. Esto permite mostrar claramente la estructura de una malla
-        poligonal dentro de una escena 3D.
-        <sup><a href="#ref5">[5]</a></sup><sup><a href="#ref6">[6]</a></sup>
+        El siguiente ejemplo usa Three.js para representar una curva Bézier cúbica 3D mediante
+        la clase <code>CubicBezierCurve3</code>, que construye una curva a partir de un punto
+        inicial, dos puntos de control y un punto final. En el ejemplo, los puntos de control
+        se animan para mostrar cómo cambia la curva en tiempo real.
       </p>
 
       <div class="canvas-3d">
         <div class="overlay">
-          <h4>Ejemplo Three.js: Malla poligonal 3D</h4>
-          <p>Geometría con aristas visibles tipo wireframe</p>
+          <h4>Ejemplo Three.js: Curva Bézier 3D</h4>
+          <p>Curva paramétrica con puntos de control animados</p>
         </div>
-        <div id="canvasMalla"></div>
+        <div id="canvasCurva"></div>
       </div>
 
       <div class="refs">
         <h3>Bibliografía</h3>
         <ol>
-          <li id="ref1">OpenMesh Documentation. <em>The Halfedge Data Structure</em>. RWTH Aachen University. Disponible en:
-            <a href="https://www.graphics.rwth-aachen.de/media/openmesh_static/Documentations/OpenMesh-6.3-Documentation/a00010.html" target="_blank" rel="noopener noreferrer">
-              OpenMesh documentation
+          <li>Universidad Complutense de Madrid. <em>Curvas paramétricas en el plano</em>. Disponible en:
+            <a href="https://blogs.mat.ucm.es/matematicas-utiles/curvas-parametricas-en-el-plano/" target="_blank" rel="noopener noreferrer">
+              https://blogs.mat.ucm.es/matematicas-utiles/curvas-parametricas-en-el-plano/
             </a>
           </li>
-          <li id="ref2">Scratchapixel. <em>Introduction to Polygon Meshes</em>. Disponible en:
-            <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-polygon-mesh/introduction.html" target="_blank" rel="noopener noreferrer">
-              https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-polygon-mesh/introduction.html
+          <li>Matusik, W. <em>Bézier Curves and Splines</em>. MIT OpenCourseWare, 6.837 Computer Graphics. Disponible en:
+            <a href="https://ocw.mit.edu/courses/6-837-computer-graphics-fall-2012/aba8735cf2cf7c71ca5d29b46873309a_MIT6_837F12_Lec01.pdf" target="_blank" rel="noopener noreferrer">
+              MIT OCW PDF
             </a>
           </li>
-          <li id="ref3">Princeton University. <em>Polygonal Meshes</em>. Disponible en:
-            <a href="https://www.cs.princeton.edu/courses/archive/fall16/cos526/lectures/14-mesh.pdf" target="_blank" rel="noopener noreferrer">
-              Princeton mesh notes
+          <li>University of New Mexico. <em>Bezier and Spline Curves and Surfaces</em>. Disponible en:
+            <a href="https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_07.pdf" target="_blank" rel="noopener noreferrer">
+              https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_07.pdf
             </a>
           </li>
-          <li id="ref4">Botsch, M.; Kobbelt, L.; Pauly, M.; Alliez, P.; Lévy, B. <em>Polygon Mesh Processing</em>. Complementado con:
-            <a href="https://graphics.rwth-aachen.de/media/papers/tutorial1.pdf" target="_blank" rel="noopener noreferrer">
-              Geometric Modeling Based on Polygonal Meshes
+          <li>Universidad del País Vasco. <em>Parametrización y representación gráfica de superficies construidas</em>. Disponible en:
+            <a href="https://ocw.ehu.eus/pluginfile.php/56681/mod_resource/content/3/OCW2020Tema03_Material%20estudio.pdf" target="_blank" rel="noopener noreferrer">
+              OCW EHU
             </a>
           </li>
-          <li id="ref5">three.js documentation. <em>EdgesGeometry</em>. La documentación indica que esta clase puede utilizarse para visualizar las aristas de una geometría.
-            Disponible en:
-            <a href="https://threejs.org/docs/pages/EdgesGeometry.html" target="_blank" rel="noopener noreferrer">
-              https://threejs.org/docs/pages/EdgesGeometry.html
-            </a>
-          </li>
-          <li id="ref6">three.js documentation. <em>SphereGeometry</em>. La clase permite crear una esfera discretizada mediante segmentos, lo que facilita ilustrar una malla poligonal.
-            Disponible en:
-            <a href="https://threejs.org/docs/pages/SphereGeometry.html" target="_blank" rel="noopener noreferrer">
-              https://threejs.org/docs/pages/SphereGeometry.html
+          <li>three.js documentation. <em>CubicBezierCurve3</em>. Disponible en:
+            <a href="https://threejs.org/docs/pages/CubicBezierCurve3.html" target="_blank" rel="noopener noreferrer">
+              https://threejs.org/docs/pages/CubicBezierCurve3.html
             </a>
           </li>
         </ol>
@@ -278,23 +339,23 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    const contenedorMalla = document.getElementById('canvasMalla');
+    const contenedorCurva = document.getElementById('canvasCurva');
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x0b0f14);
 
-    const camera = new THREE.PerspectiveCamera(45, contenedorMalla.clientWidth / 520, 0.1, 1000);
-    camera.position.set(0, 3, 10);
+    const camera = new THREE.PerspectiveCamera(45, contenedorCurva.clientWidth / 520, 0.1, 1000);
+    camera.position.set(0, 4, 16);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(contenedorMalla.clientWidth, 520);
-    contenedorMalla.appendChild(renderer.domElement);
+    renderer.setSize(contenedorCurva.clientWidth, 520);
+    contenedorCurva.appendChild(renderer.domElement);
 
-    const luzAmbiental = new THREE.AmbientLight(0xffffff, 0.7);
+    const luzAmbiental = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(luzAmbiental);
 
     const luzDireccional = new THREE.DirectionalLight(0xffffff, 1);
-    luzDireccional.position.set(5, 8, 10);
+    luzDireccional.position.set(5, 10, 7);
     scene.add(luzDireccional);
 
     const axesHelper = new THREE.AxesHelper(5);
@@ -303,36 +364,75 @@
     const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
     scene.add(gridHelper);
 
-    const geometry = new THREE.SphereGeometry(2.2, 10, 8);
-    const materialMesh = new THREE.MeshPhongMaterial({
-      color: 0x2277ff,
-      flatShading: true,
-      transparent: true,
-      opacity: 0.85,
-      side: THREE.DoubleSide
+    let lineaCurva, lineaControl;
+    const esferasControl = [];
+
+    const materialCurva = new THREE.LineBasicMaterial({ color: 0x00ffff });
+    const materialControl = new THREE.LineDashedMaterial({
+      color: 0xffaa00,
+      dashSize: 0.3,
+      gapSize: 0.2
     });
 
-    const objeto = new THREE.Mesh(geometry, materialMesh);
-    scene.add(objeto);
+    const materialPunto = new THREE.MeshBasicMaterial({ color: 0xff3355 });
+    const geometriaPunto = new THREE.SphereGeometry(0.15, 16, 16);
 
-    const edges = new THREE.EdgesGeometry(geometry);
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
-    const wireframe = new THREE.LineSegments(edges, lineMaterial);
-    objeto.add(wireframe);
+    for (let i = 0; i < 4; i++) {
+      const esfera = new THREE.Mesh(geometriaPunto, materialPunto);
+      esferasControl.push(esfera);
+      scene.add(esfera);
+    }
+
+    function crearCurva(tiempo) {
+      const p0 = new THREE.Vector3(-6, 0, 0);
+      const p1 = new THREE.Vector3(-2, 4 * Math.sin(tiempo), 0);
+      const p2 = new THREE.Vector3(2, 4 * Math.cos(tiempo), 0);
+      const p3 = new THREE.Vector3(6, 0, 0);
+
+      esferasControl[0].position.copy(p0);
+      esferasControl[1].position.copy(p1);
+      esferasControl[2].position.copy(p2);
+      esferasControl[3].position.copy(p3);
+
+      const curva = new THREE.CubicBezierCurve3(p0, p1, p2, p3);
+      const puntosCurva = curva.getPoints(100);
+      const geometriaCurva = new THREE.BufferGeometry().setFromPoints(puntosCurva);
+
+      if (lineaCurva) {
+        scene.remove(lineaCurva);
+        lineaCurva.geometry.dispose();
+      }
+
+      lineaCurva = new THREE.Line(geometriaCurva, materialCurva);
+      scene.add(lineaCurva);
+
+      const puntosControl = [p0, p1, p2, p3];
+      const geometriaControl = new THREE.BufferGeometry().setFromPoints(puntosControl);
+
+      if (lineaControl) {
+        scene.remove(lineaControl);
+        lineaControl.geometry.dispose();
+      }
+
+      lineaControl = new THREE.Line(geometriaControl, materialControl);
+      lineaControl.computeLineDistances();
+      scene.add(lineaControl);
+    }
 
     function animate() {
       requestAnimationFrame(animate);
-      objeto.rotation.x += 0.01;
-      objeto.rotation.y += 0.015;
+      const tiempo = performance.now() * 0.001;
+      crearCurva(tiempo);
+      scene.rotation.y += 0.003;
       renderer.render(scene, camera);
     }
 
     animate();
 
     window.addEventListener('resize', () => {
-      camera.aspect = contenedorMalla.clientWidth / 520;
+      camera.aspect = contenedorCurva.clientWidth / 520;
       camera.updateProjectionMatrix();
-      renderer.setSize(contenedorMalla.clientWidth, 520);
+      renderer.setSize(contenedorCurva.clientWidth, 520);
     });
   </script>
 </body>

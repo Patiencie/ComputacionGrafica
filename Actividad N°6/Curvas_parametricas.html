@@ -12,7 +12,6 @@
       --text: #22201c;
       --muted: #5c5a56;
       --accent: #0d6b72;
-      --accent-2: #ab6a18;
       --border: #d7d2c8;
       --shadow: 0 10px 30px rgba(0,0,0,.08);
       --max: 1080px;
@@ -22,7 +21,7 @@
 
     body {
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
@@ -39,31 +38,11 @@
       margin: 0 auto;
     }
 
-    h1, h2, h3 {
-      line-height: 1.2;
-    }
+    h1 { font-size: 2.3rem; margin: 0 0 12px; }
+    h2 { font-size: 1.9rem; border-bottom: 3px solid var(--accent); padding-bottom: 8px; }
+    h3 { font-size: 1.2rem; margin-top: 28px; color: #17363c; }
 
-    h1 {
-      font-size: 2.3rem;
-      margin: 0 0 12px;
-    }
-
-    h2 {
-      font-size: 1.9rem;
-      margin-top: 0;
-      border-bottom: 3px solid var(--accent);
-      padding-bottom: 8px;
-    }
-
-    h3 {
-      font-size: 1.2rem;
-      margin-top: 28px;
-      color: #17363c;
-    }
-
-    main {
-      padding: 28px 24px 64px;
-    }
+    main { padding: 28px 24px 64px; }
 
     section {
       background: var(--surface);
@@ -72,16 +51,6 @@
       padding: 28px;
       margin: 22px auto;
       box-shadow: var(--shadow);
-    }
-
-    p {
-      margin: 12px 0;
-      text-align: justify;
-    }
-
-    .lead {
-      font-size: 1.08rem;
-      max-width: 80ch;
     }
 
     .grid {
@@ -98,342 +67,178 @@
       padding: 18px;
     }
 
-    ul {
-      margin: 8px 0 0 20px;
+    /* ESTILO TIPO "CUBO" PARA EL VISUALIZADOR */
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      background: #000;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 30px;
     }
 
-    li {
-      margin-bottom: 8px;
+    canvas { display: block; }
+
+    .canvas-overlay {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      pointer-events: none; /* Permite que el mouse pase a través del texto */
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
-    .refs ol {
-      padding-left: 22px;
-    }
-
-    .refs li {
-      margin-bottom: 10px;
-    }
-
-    sup a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a {
-      color: var(--accent);
-    }
+    .canvas-overlay h4 { margin: 0; font-size: 1.4rem; font-weight: 300; }
+    .canvas-overlay p { margin: 5px 0; font-size: 0.9rem; opacity: 0.8; }
 
     .btn-volver {
-      margin: 22px 0 0;
+      margin: 22px 0;
       background: var(--accent);
       color: white;
       border: none;
-      padding: 12px 18px;
-      border-radius: 10px;
+      padding: 10px 20px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 0.98rem;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      box-shadow: var(--shadow);
-      transition: background 0.25s ease, transform 0.2s ease;
+      transition: 0.3s;
     }
 
-    .btn-volver:hover {
-      background: #09545a;
-      transform: translateY(-2px);
-    }
-
-    .btn-volver:active {
-      transform: translateY(0);
-    }
-
-    .canvas-3d {
-      margin-top: 22px;
-      background: #0b0f14;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      height: 520px;
-    }
-
-    .canvas-3d .overlay {
-      position: absolute;
-      top: 14px;
-      width: 100%;
-      text-align: center;
-      color: white;
-      z-index: 10;
-      pointer-events: none;
-      font-family: 'Segoe UI', Arial, sans-serif;
-    }
-
-    .canvas-3d .overlay h4 {
-      margin: 0;
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
-
-    .canvas-3d .overlay p {
-      margin: 4px 0 0;
-      text-align: center;
-      color: #d7d7d7;
-      font-size: 0.92rem;
-    }
-
-    #canvasCurva {
-      width: 100%;
-      height: 100%;
-    }
+    .btn-volver:hover { background: #09545a; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <h1>Curvas paramétricas en computación gráfica</h1>
-      <p class="lead">
-        Desarrollo conceptual, importancia, tipos, usos en computación gráfica,
-        ejemplo gráfico y bibliografía.
-      </p>
-    </div>
-  </header>
 
+<header>
   <div class="wrap">
-    <button class="btn-volver" onclick="history.back()">← Volver a la página anterior</button>
+    <h1>Curvas paramétricas en computación gráfica</h1>
+    <p>Desarrollo conceptual, importancia y visualización interactiva.</p>
   </div>
+</header>
 
-  <main class="wrap">
-    <section>
-      <h2>Concepto</h2>
+<main class="wrap">
+  <button class="btn-volver" onclick="history.back()">← Volver</button>
 
-      <p>
-        Las curvas paramétricas son una forma de representación matemática en la que cada punto
-        de la curva se obtiene a partir de una o más funciones que dependen de un parámetro,
-        normalmente <em>t</em>. En términos formales, una curva puede verse como un mapeo desde
-        un intervalo de parámetros hacia el plano o el espacio, lo que permite expresar puntos
-        de la forma <em>P(t)</em> y describir trayectorias suaves tanto en 2D como en 3D.
-      </p>
+  <section>
+    <h2>Concepto y Aplicación</h2>
+    <p>
+      Las curvas paramétricas permiten definir trayectorias complejas mediante una sola variable <em>t</em>. 
+      A diferencia de las funciones explícitas, permiten representar formas que se "devuelven" sobre sí mismas, 
+      como círculos o espirales, siendo vitales para el diseño industrial y la animación.
+    </p>
 
-      <p>
-        En computación gráfica, esta representación es especialmente importante porque no se
-        trabaja solamente con figuras estáticas, sino con entidades geométricas que deben
-        editarse, interpolarse, animarse y finalmente visualizarse. Las curvas paramétricas
-        permiten modelar geometría continua con pocos datos de control, lo que mejora la
-        precisión del diseño y reduce la complejidad de almacenamiento frente a una
-        representación puramente discreta.
-      </p>
-
-      <p>
-        Además, la parametrización separa la forma geométrica del modo en que la curva se recorre.
-        Esto significa que el parámetro también puede interpretarse como tiempo en animación,
-        permitiendo describir trayectorias de movimiento, recorridos de cámara y desplazamientos
-        de objetos virtuales con suavidad controlada.
-      </p>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Importancia</h3>
-          <p>
-            Las curvas paramétricas son importantes porque constituyen una base para el modelado
-            geométrico suave, la tipografía digital, la ilustración vectorial, la animación por
-            trayectorias y la construcción de superficies más complejas.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Dónde se usan</h3>
-          <p>
-            Se utilizan en software de diseño vectorial, sistemas CAD, edición de fuentes,
-            animación 2D y 3D, trayectorias de cámara y modelado de contornos. También aparecen
-            en procesos de teselación, porque una curva matemática debe discretizarse en
-            polilíneas antes de ser rasterizada.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Valor en gráficos</h3>
-          <p>
-            Su valor práctico está en que ofrecen continuidad, control de forma y facilidad de
-            evaluación. Esto permite refinar, subdividir o aproximar una curva según las
-            necesidades del renderizado.
-          </p>
-        </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Bézier</h3>
+        <p>Utilizadas en .svg y tipografías. Se basan en polinomios de Bernstein.</p>
       </div>
+      <div class="card">
+        <h3>NURBS</h3>
+        <p>El estándar en la industria CAD para modelado de alta precisión mecánica.</p>
+      </div>
+    </div>
 
-      <h3>Tipos principales</h3>
-      <p>
-        Entre las familias más importantes se encuentran las curvas de Bézier, Hermite,
-        B-spline y NURBS. Las curvas de Bézier son ampliamente utilizadas porque se definen
-        con pocos puntos de control y poseen propiedades geométricas muy útiles. Las B-splines
-        añaden mayor control local, de modo que al modificar un punto de control no se altera
-        toda la curva, sino solo una región específica.
-      </p>
+    <div class="canvas-container" id="visualizador3D">
+      <div class="canvas-overlay">
+        <h4>Visualización: Curva de Bézier Cúbica Animada</h4>
+        <p>Realizado por: Jhon Anderson Quispe Mamani</p>
+        <p>Interacción: Los puntos de control oscilan matemáticamente</p>
+      </div>
+    </div>
 
+    <div class="refs" style="margin-top: 40px;">
+      <h3>Bibliografía consultada</h3>
       <ul>
-        <li><strong>Bézier:</strong> muy utilizadas en gráficos vectoriales, modelado y animación.</li>
-        <li><strong>Hermite:</strong> adecuadas cuando interesa controlar posición y tangencia en los extremos.</li>
-        <li><strong>B-spline:</strong> permiten continuidad suave entre segmentos y mejor control local.</li>
-        <li><strong>NURBS:</strong> muy usadas en CAD por su alta precisión geométrica.</li>
+        <li>Three.js Documentation - CubicBezierCurve3</li>
+        <li>MIT OpenCourseWare - Computer Graphics (Bézier Curves)</li>
       </ul>
+    </div>
+  </section>
+</main>
 
-      <h3>Usos en computación gráfica</h3>
-      <p>
-        En computación gráfica, las curvas paramétricas sirven para construir trayectorias de
-        animación, contornos de objetos, perfiles de extrusión, trayectorias de cámaras,
-        interpolación entre estados y generación de superficies.
-      </p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  const container = document.getElementById('visualizador3D');
 
-      <p>
-        Un aspecto técnico importante es la teselación. El hardware gráfico finalmente dibuja
-        segmentos y triángulos, no entidades matemáticas abstractas; por ello, las curvas
-        paramétricas se convierten en polilíneas mediante muestreo del parámetro.
-      </p>
+  // 1. ESCENA Y CÁMARA
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 2, 12);
 
-      <h3>Ejemplo gráfico en computación gráfica</h3>
-      <p>
-        El siguiente ejemplo usa Three.js para representar una curva Bézier cúbica 3D mediante
-        la clase <code>CubicBezierCurve3</code>, que construye una curva a partir de un punto
-        inicial, dos puntos de control y un punto final. En el ejemplo, los puntos de control
-        se animan para mostrar cómo cambia la curva en tiempo real.
-      </p>
+  // 2. RENDERIZADOR
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
 
-      <div class="canvas-3d">
-        <div class="overlay">
-          <h4>Ejemplo Three.js: Curva Bézier 3D</h4>
-          <p>Curva paramétrica con puntos de control animados</p>
-        </div>
-        <div id="canvasCurva"></div>
-      </div>
+  // 3. ELEMENTOS DE APOYO (Grilla y Ejes)
+  const grid = new THREE.GridHelper(20, 20, 0x333333, 0x222222);
+  scene.add(grid);
 
-      <div class="refs">
-        <h3>Bibliografía</h3>
-        <ol>
-          <li>Universidad Complutense de Madrid. <em>Curvas paramétricas en el plano</em>. Disponible en:
-            <a href="https://blogs.mat.ucm.es/matematicas-utiles/curvas-parametricas-en-el-plano/" target="_blank" rel="noopener noreferrer">
-              https://blogs.mat.ucm.es/matematicas-utiles/curvas-parametricas-en-el-plano/
-            </a>
-          </li>
-          <li>Matusik, W. <em>Bézier Curves and Splines</em>. MIT OpenCourseWare, 6.837 Computer Graphics. Disponible en:
-            <a href="https://ocw.mit.edu/courses/6-837-computer-graphics-fall-2012/aba8735cf2cf7c71ca5d29b46873309a_MIT6_837F12_Lec01.pdf" target="_blank" rel="noopener noreferrer">
-              MIT OCW PDF
-            </a>
-          </li>
-          <li>University of New Mexico. <em>Bezier and Spline Curves and Surfaces</em>. Disponible en:
-            <a href="https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_07.pdf" target="_blank" rel="noopener noreferrer">
-              https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_07.pdf
-            </a>
-          </li>
-          <li>Universidad del País Vasco. <em>Parametrización y representación gráfica de superficies construidas</em>. Disponible en:
-            <a href="https://ocw.ehu.eus/pluginfile.php/56681/mod_resource/content/3/OCW2020Tema03_Material%20estudio.pdf" target="_blank" rel="noopener noreferrer">
-              OCW EHU
-            </a>
-          </li>
-          <li>three.js documentation. <em>CubicBezierCurve3</em>. Disponible en:
-            <a href="https://threejs.org/docs/pages/CubicBezierCurve3.html" target="_blank" rel="noopener noreferrer">
-              https://threejs.org/docs/pages/CubicBezierCurve3.html
-            </a>
-          </li>
-        </ol>
-      </div>
-    </section>
-  </main>
+  // 4. OBJETOS DE LA CURVA
+  const materialCurva = new THREE.LineBasicMaterial({ color: 0x00ffcc, linewidth: 2 });
+  const materialControl = new THREE.LineDashedMaterial({ color: 0xffaa00, dashSize: 0.2, gapSize: 0.1 });
+  
+  let lineaCurva, lineaControl;
+  const esferasControl = [];
+  const geoEsfera = new THREE.SphereGeometry(0.12, 16, 16);
+  const matEsfera = new THREE.MeshBasicMaterial({ color: 0xff3366 });
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    const contenedorCurva = document.getElementById('canvasCurva');
+  for (let i = 0; i < 4; i++) {
+    const s = new THREE.Mesh(geoEsfera, matEsfera);
+    esferasControl.push(s);
+    scene.add(s);
+  }
 
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0b0f14);
+  function actualizarCurva(t) {
+    // Definimos los 4 puntos de la curva Bézier
+    const p0 = new THREE.Vector3(-5, 0, 0);
+    const p1 = new THREE.Vector3(-2, Math.sin(t) * 4, Math.cos(t) * 2);
+    const p2 = new THREE.Vector3(2, Math.cos(t) * 4, Math.sin(t) * 2);
+    const p3 = new THREE.Vector3(5, 0, 0);
 
-    const camera = new THREE.PerspectiveCamera(45, contenedorCurva.clientWidth / 520, 0.1, 1000);
-    camera.position.set(0, 4, 16);
+    // Actualizar esferas
+    const puntos = [p0, p1, p2, p3];
+    puntos.forEach((p, i) => esferasControl[i].position.copy(p));
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(contenedorCurva.clientWidth, 520);
-    contenedorCurva.appendChild(renderer.domElement);
+    // Crear la curva matemática
+    const curve = new THREE.CubicBezierCurve3(p0, p1, p2, p3);
+    const points = curve.getPoints(100);
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-    const luzAmbiental = new THREE.AmbientLight(0xffffff, 0.8);
-    scene.add(luzAmbiental);
+    if (lineaCurva) scene.remove(lineaCurva);
+    lineaCurva = new THREE.Line(geometry, materialCurva);
+    scene.add(lineaCurva);
 
-    const luzDireccional = new THREE.DirectionalLight(0xffffff, 1);
-    luzDireccional.position.set(5, 10, 7);
-    scene.add(luzDireccional);
+    // Línea de control (polígono de control)
+    const geometryCtrl = new THREE.BufferGeometry().setFromPoints(puntos);
+    if (lineaControl) scene.remove(lineaControl);
+    lineaControl = new THREE.Line(geometryCtrl, materialControl);
+    lineaControl.computeLineDistances();
+    scene.add(lineaControl);
+  }
 
-    const axesHelper = new THREE.AxesHelper(5);
-    scene.add(axesHelper);
+  // 5. ANIMACIÓN
+  function animate() {
+    requestAnimationFrame(animate);
+    const time = performance.now() * 0.001;
+    
+    actualizarCurva(time);
+    
+    // Rotación suave de la escena para efecto 3D similar al cubo
+    scene.rotation.y += 0.005;
+    
+    renderer.render(scene, camera);
+  }
 
-    const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
-    scene.add(gridHelper);
+  // 6. RESPONSIVE
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
 
-    let lineaCurva, lineaControl;
-    const esferasControl = [];
+  animate();
+</script>
 
-    const materialCurva = new THREE.LineBasicMaterial({ color: 0x00ffff });
-    const materialControl = new THREE.LineDashedMaterial({
-      color: 0xffaa00,
-      dashSize: 0.3,
-      gapSize: 0.2
-    });
-
-    const materialPunto = new THREE.MeshBasicMaterial({ color: 0xff3355 });
-    const geometriaPunto = new THREE.SphereGeometry(0.15, 16, 16);
-
-    for (let i = 0; i < 4; i++) {
-      const esfera = new THREE.Mesh(geometriaPunto, materialPunto);
-      esferasControl.push(esfera);
-      scene.add(esfera);
-    }
-
-    function crearCurva(tiempo) {
-      const p0 = new THREE.Vector3(-6, 0, 0);
-      const p1 = new THREE.Vector3(-2, 4 * Math.sin(tiempo), 0);
-      const p2 = new THREE.Vector3(2, 4 * Math.cos(tiempo), 0);
-      const p3 = new THREE.Vector3(6, 0, 0);
-
-      esferasControl[0].position.copy(p0);
-      esferasControl[1].position.copy(p1);
-      esferasControl[2].position.copy(p2);
-      esferasControl[3].position.copy(p3);
-
-      const curva = new THREE.CubicBezierCurve3(p0, p1, p2, p3);
-      const puntosCurva = curva.getPoints(100);
-      const geometriaCurva = new THREE.BufferGeometry().setFromPoints(puntosCurva);
-
-      if (lineaCurva) {
-        scene.remove(lineaCurva);
-        lineaCurva.geometry.dispose();
-      }
-
-      lineaCurva = new THREE.Line(geometriaCurva, materialCurva);
-      scene.add(lineaCurva);
-
-      const puntosControl = [p0, p1, p2, p3];
-      const geometriaControl = new THREE.BufferGeometry().setFromPoints(puntosControl);
-
-      if (lineaControl) {
-        scene.remove(lineaControl);
-        lineaControl.geometry.dispose();
-      }
-
-      lineaControl = new THREE.Line(geometriaControl, materialControl);
-      lineaControl.computeLineDistances();
-      scene.add(lineaControl);
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-      const tiempo = performance.now() * 0.001;
-      crearCurva(tiempo);
-      scene.rotation.y += 0.003;
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = contenedorCurva.clientWidth / 520;
-      camera.updateProjectionMatrix();
-      renderer.setSize(contenedorCurva.clientWidth, 520);
-    });
-  </script>
 </body>
 </html>

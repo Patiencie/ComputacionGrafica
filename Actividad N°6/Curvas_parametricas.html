@@ -339,118 +339,97 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-// 1. CONFIGURACIÓN DEL ESCENARIO
-const contenedorCurva = document.getElementById('canvasCurva');
+        // 1. CONFIGURACIÓN DEL ESCENARIO
+        const contenedorCurva = document.getElementById('canvasCurva');
+        const width = contenedorCurva.clientWidth;
+        const height = contenedorCurva.clientHeight;
 
-// La Escena es el "universo" donde viven los objetos
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0b0f14); // Fondo oscuro
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0b0f14);
 
-// La Cámara define la perspectiva (ángulo de visión, relación de aspecto, planos cerca/lejos)
-const camera = new THREE.PerspectiveCamera(45, contenedorCurva.clientWidth / 520, 0.1, 1000);
-camera.position.set(0, 4, 16); // Posicionamos la cámara para ver la curva desde arriba/atrás
+        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+        camera.position.set(0, 5, 15);
+        camera.lookAt(0, 0, 0);
 
-// El Renderizador es el motor que dibuja los cálculos matemáticos en el HTML
-const renderer = new THREE.WebGLRenderer({ antialias: true }); // antialias para bordes suaves
-renderer.setSize(contenedorCurva.clientWidth, 520);
-contenedorCurva.appendChild(renderer.domElement); // Inserta el canvas en el div
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(width, height);
+        contenedorCurva.appendChild(renderer.domElement);
 
-// 2. ILUMINACIÓN Y AYUDAS VISUALES
-const luzAmbiental = new THREE.AmbientLight(0xffffff, 0.8); // Luz general para que todo se vea
-scene.add(luzAmbiental);
+        // 2. ELEMENTOS VISUALES DE APOYO
+        scene.add(new THREE.GridHelper(20, 20, 0x333333, 0x222222));
 
-const axesHelper = new THREE.AxesHelper(5); // Dibuja los ejes X, Y, Z para orientación
-scene.add(axesHelper);
+        // 3. OBJETOS DE LA CURVA (Inicialización única)
+        const materialCurva = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 2 });
+        const materialControl = new THREE.LineDashedMaterial({ color: 0xffaa00, dashSize: 0.3, gapSize: 0.2 });
+        const materialPunto = new THREE.MeshBasicMaterial({ color: 0xff3355 });
+        const geometriaPunto = new THREE.SphereGeometry(0.18, 16, 16);
 
-const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222); // Rejilla de suelo
-scene.add(gridHelper);
+        // Puntos de control (Esferas)
+        const esferasControl = [];
+        for (let i = 0; i < 4; i++) {
+            const esfera = new THREE.Mesh(geometriaPunto, materialPunto);
+            esferasControl.push(esfera);
+            scene.add(esfera);
+        }
 
-// 3. DEFINICIÓN DE MATERIALES (Cómo se ven los objetos)
-let lineaCurva, lineaControl;
-const esferasControl = [];
+        // Líneas (Curva y Polígono de control)
+        const geomCurva = new THREE.BufferGeometry();
+        const geomPoligono = new THREE.BufferGeometry();
 
-const materialCurva = new THREE.LineBasicMaterial({ color: 0x00ffff }); // Color cian para la curva
-const materialControl = new THREE.LineDashedMaterial({ // Línea discontinua para los controles
-  color: 0xffaa00,
-  dashSize: 0.3,
-  gapSize: 0.2
-});
+        const lineaCurva = new THREE.Line(geomCurva, materialCurva);
+        const lineaPoligono = new THREE.Line(geomPoligono, materialControl);
 
-const materialPunto = new THREE.MeshBasicMaterial({ color: 0xff3355 }); // Color rosa para los nodos
-const geometriaPunto = new THREE.SphereGeometry(0.15, 16, 16); // Esferas pequeñas
+        scene.add(lineaCurva);
+        scene.add(lineaPoligono);
 
-// Creamos 4 esferas que representarán los Puntos de Control de la curva Bézier
-for (let i = 0; i < 4; i++) {
-  const esfera = new THREE.Mesh(geometriaPunto, materialPunto);
-  esferasControl.push(esfera);
-  scene.add(esfera);
-}
+        // 4. LÓGICA DE ACTUALIZACIÓN
+        function actualizarGeometria(tiempo) {
+            // Definición de puntos paramétricos
+            const p0 = new THREE.Vector3(-6, 0, 0);
+            const p1 = new THREE.Vector3(-2, 5 * Math.sin(tiempo), 5 * Math.cos(tiempo));
+            const p2 = new THREE.Vector3(2, 5 * Math.cos(tiempo), 5 * Math.sin(tiempo));
+            const p3 = new THREE.Vector3(6, 0, 0);
 
-// 4. LÓGICA DE LA CURVA PARAMÉTRICA
-function crearCurva(tiempo) {
-  // Definimos los 4 puntos (P0: inicio, P1-P2: control, P3: fin)
-  const p0 = new THREE.Vector3(-6, 0, 0);
-  // Los puntos P1 y P2 se mueven usando Seno y Coseno para crear la animación suave
-  const p1 = new THREE.Vector3(-2, 4 * Math.sin(tiempo), 0);
-  const p2 = new THREE.Vector3(2, 4 * Math.cos(tiempo), 0);
-  const p3 = new THREE.Vector3(6, 0, 0);
+            // Actualizar esferas
+            esferasControl[0].position.copy(p0);
+            esferasControl[1].position.copy(p1);
+            esferasControl[2].position.copy(p2);
+            esferasControl[3].position.copy(p3);
 
-  // Movemos las esferas visuales a la posición de los puntos de control
-  esferasControl[0].position.copy(p0);
-  esferasControl[1].position.copy(p1);
-  esferasControl[2].position.copy(p2);
-  esferasControl[3].position.copy(p3);
+            // Recalcular Curva Bézier
+            const curvaBezier = new THREE.CubicBezierCurve3(p0, p1, p2, p3);
+            const puntos = curvaBezier.getPoints(100);
+            
+            // Inyectar puntos en las geometrías existentes
+            geomCurva.setFromPoints(puntos);
+            geomPoligono.setFromPoints([p0, p1, p2, p3]);
+            
+            lineaPoligono.computeLineDistances(); // Para el efecto punteado
+        }
 
-  // Creamos la entidad matemática de la Curva de Bézier Cúbica
-  const curva = new THREE.CubicBezierCurve3(p0, p1, p2, p3);
-  
-  // Convertimos la curva matemática en una serie de 100 puntos para poder dibujarla
-  const puntosCurva = curva.getPoints(100);
-  const geometriaCurva = new THREE.BufferGeometry().setFromPoints(puntosCurva);
+        // 5. CICLO DE ANIMACIÓN
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const tiempo = performance.now() * 0.0015;
+            actualizarGeometria(tiempo);
+            
+            // Rotación suave global para apreciar el 3D
+            scene.rotation.y += 0.002;
+            
+            renderer.render(scene, camera);
+        }
 
-  // Si ya existe una curva dibujada, la eliminamos para no saturar la memoria
-  if (lineaCurva) {
-    scene.remove(lineaCurva);
-    lineaCurva.geometry.dispose();
-  }
+        // 6. RESPONSIVIDAD
+        window.addEventListener('resize', () => {
+            const w = contenedorCurva.clientWidth;
+            const h = contenedorCurva.clientHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        });
 
-  // Creamos el objeto visual de la línea y lo añadimos a la escena
-  lineaCurva = new THREE.Line(geometriaCurva, materialCurva);
-  scene.add(lineaCurva);
-
-  // Dibujamos las líneas amarillas que conectan los puntos de control (Polígono de control)
-  const puntosControl = [p0, p1, p2, p3];
-  const geometriaControl = new THREE.BufferGeometry().setFromPoints(puntosControl);
-
-  if (lineaControl) {
-    scene.remove(lineaControl);
-    lineaControl.geometry.dispose();
-  }
-
-  lineaControl = new THREE.Line(geometriaControl, materialControl);
-  lineaControl.computeLineDistances(); // Necesario para que la línea punteada funcione
-  scene.add(lineaControl);
-}
-
-// 5. CICLO DE ANIMACIÓN (Se ejecuta ~60 veces por segundo)
-function animate() {
-  requestAnimationFrame(animate);
-  
-  const tiempo = performance.now() * 0.001; // Obtenemos el tiempo actual en segundos
-  crearCurva(tiempo); // Recalculamos la curva según el tiempo
-  
-  scene.rotation.y += 0.003; // Rotación lenta de la cámara/escena para efecto 3D
-  renderer.render(scene, camera); // Dibujamos el fotograma
-}
-
-animate(); // Iniciamos el bucle
-
-// Ajustar el tamaño si el usuario cambia el tamaño de la ventana del navegador
-window.addEventListener('resize', () => {
-  camera.aspect = contenedorCurva.clientWidth / 520;
-  camera.updateProjectionMatrix();
-  renderer.setSize(contenedorCurva.clientWidth, 520);
-});
+        animate();
   </script>
 </body>
 </html>

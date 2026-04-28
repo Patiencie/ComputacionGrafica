@@ -207,127 +207,127 @@
 
       <p>
         Las curvas paramétricas son una forma de representación matemática en la que cada punto
-        de la curva se obtiene a partir de una o más funciones que dependen de un parámetro,
-        normalmente <em>t</em>. En términos formales, una curva puede verse como un mapeo desde
-        un intervalo de parámetros hacia el plano o el espacio, lo que permite expresar puntos
-        de la forma <em>P(t)</em> y describir trayectorias suaves tanto en 2D como en 3D.
+        of the curve is obtained from one or more functions that depend on a parameter,
+        usually <em>t</em>. Formally, a curve can be seen as a mapping from
+        an interval of parameters to the plane or space, which allows expressing points
+        of the form <em>P(t)</em> and describing smooth trajectories in both 2D and 3D.
       </p>
 
       <p>
-        En computación gráfica, esta representación es especialmente importante porque no se
-        trabaja solamente con figuras estáticas, sino con entidades geométricas que deben
-        editarse, interpolarse, animarse y finalmente visualizarse. Las curvas paramétricas
-        permiten modelar geometría continua con pocos datos de control, lo que mejora la
-        precisión del diseño y reduce la complejidad de almacenamiento frente a una
-        representación puramente discreta.
+        In computer graphics, this representation is especially important because it does not
+        only work with static figures, but with geometric entities that must
+        be edited, interpolated, animated, and finally visualized. Parametric curves
+        allow modeling continuous geometry with few control data, which improves design
+        accuracy and reduces storage complexity compared to a
+        purely discrete representation.
       </p>
 
       <p>
-        Además, la parametrización separa la forma geométrica del modo en que la curva se recorre.
-        Esto significa que el parámetro también puede interpretarse como tiempo en animación,
-        permitiendo describir trayectorias de movimiento, recorridos de cámara y desplazamientos
-        de objetos virtuales con suavidad controlada.
+        Also, parameterization separates the geometric shape from the way the curve is traversed.
+        This means that the parameter can also be interpreted as time in animation,
+        allowing for describing smooth controlled trajectories of movement, camera paths,
+        and virtual object displacements.
       </p>
 
       <div class="grid">
         <div class="card">
-          <h3>Importancia</h3>
+          <h3>Importance</h3>
           <p>
-            Las curvas paramétricas son importantes porque constituyen una base para el modelado
-            geométrico suave, la tipografía digital, la ilustración vectorial, la animación por
-            trayectorias y la construcción de superficies más complejas.
+            Parametric curves are important because they constitute a foundation for smooth
+            geometric modeling, digital typography, vector illustration, animation by
+            trajectories, and the construction of more complex surfaces.
           </p>
         </div>
 
         <div class="card">
-          <h3>Dónde se usan</h3>
+          <h3>Where they are used</h3>
           <p>
-            Se utilizan en software de diseño vectorial, sistemas CAD, edición de fuentes,
-            animación 2D y 3D, trayectorias de cámara y modelado de contornos. También aparecen
-            en procesos de teselación, porque una curva matemática debe discretizarse en
-            polilíneas antes de ser rasterizada.
+            They are used in vector design software, CAD systems, font editing,
+            2D and 3D animation, camera paths, and contour modeling. They also appear
+            in tessellation processes, because a mathematical curve must be discretized into
+            polylines before being rasterized.
           </p>
         </div>
 
         <div class="card">
-          <h3>Valor en gráficos</h3>
+          <h3>Value in graphics</h3>
           <p>
-            Su valor práctico está en que ofrecen continuidad, control de forma y facilidad de
-            evaluación. Esto permite refinar, subdividir o aproximar una curva según las
-            necesidades del renderizado.
+            Their practical value is that they offer continuity, shape control, and ease of
+            evaluation. This allows refining, subdividing, or approximating a curve according to
+            rendering needs.
           </p>
         </div>
       </div>
 
-      <h3>Tipos principales</h3>
+      <h3>Main types</h3>
       <p>
-        Entre las familias más importantes se encuentran las curvas de Bézier, Hermite,
-        B-spline y NURBS. Las curvas de Bézier son ampliamente utilizadas porque se definen
-        con pocos puntos de control y poseen propiedades geométricas muy útiles. Las B-splines
-        añaden mayor control local, de modo que al modificar un punto de control no se altera
-        toda la curva, sino solo una región específica.
+        Among the most important families are Bézier, Hermite, B-spline, and NURBS curves.
+        Bézier curves are widely used because they are defined with few control points
+        and possess very useful geometric properties. B-splines add more local control,
+        so that modifying a control point does not alter the entire curve, but only a
+        specific region.
       </p>
 
       <ul>
-        <li><strong>Bézier:</strong> muy utilizadas en gráficos vectoriales, modelado y animación.</li>
-        <li><strong>Hermite:</strong> adecuadas cuando interesa controlar posición y tangencia en los extremos.</li>
-        <li><strong>B-spline:</strong> permiten continuidad suave entre segmentos y mejor control local.</li>
-        <li><strong>NURBS:</strong> muy usadas en CAD por su alta precisión geométrica.</li>
+        <li><strong>Bézier:</strong> widely used in vector graphics, modeling, and animation.</li>
+        <li><strong>Hermite:</strong> suitable when interested in controlling position and tangency at the ends.</li>
+        <li><strong>B-spline:</strong> allow smooth continuity between segments and better local control.</li>
+        <li><strong>NURBS:</strong> very used in CAD for its high geometric precision.</li>
       </ul>
 
-      <h3>Usos en computación gráfica</h3>
+      <h3>Uses in computer graphics</h3>
       <p>
-        En computación gráfica, las curvas paramétricas sirven para construir trayectorias de
-        animación, contornos de objetos, perfiles de extrusión, trayectorias de cámaras,
-        interpolación entre estados y generación de superficies.
+        In computer graphics, parametric curves serve to construct animation trajectories,
+        object contours, extrusion profiles, camera paths, interpolation between states,
+        and surface generation.
       </p>
 
       <p>
-        Un aspecto técnico importante es la teselación. El hardware gráfico finalmente dibuja
-        segmentos y triángulos, no entidades matemáticas abstractas; por ello, las curvas
-        paramétricas se convierten en polilíneas mediante muestreo del parámetro.
+        An important technical aspect is tessellation. Graphics hardware finally draws
+        segments and triangles, not abstract mathematical entities; therefore, parametric
+        curves are converted into polylines by parameter sampling.
       </p>
 
-      <h3>Ejemplo gráfico en computación gráfica</h3>
+      <h3>Graphical example in computer graphics</h3>
       <p>
-        El siguiente ejemplo usa Three.js para representar una curva Bézier cúbica 3D mediante
-        la clase <code>CubicBezierCurve3</code>, que construye una curva a partir de un punto
-        inicial, dos puntos de control y un punto final. En el ejemplo, los puntos de control
-        se animan para mostrar cómo cambia la curva en tiempo real.
+        The following example uses Three.js to represent a 3D cubic Bézier curve using
+        the <code>CubicBezierCurve3</code> class, which constructs a curve from an initial
+        point, two control points, and a final point. In the example, the control points
+        are animated to show how the curve changes in real-time.
       </p>
 
       <div class="canvas-3d">
         <div class="overlay">
-          <h4>Ejemplo Three.js: Curva Bézier 3D</h4>
-          <p>Curva paramétrica con puntos de control animados</p>
+          <h4>Three.js Example: 3D Bézier Curve</h4>
+          <p>Parametric curve with animated control points</p>
         </div>
         <div id="canvasCurva"></div>
       </div>
 
       <div class="refs">
-        <h3>Bibliografía</h3>
+        <h3>Bibliography</h3>
         <ol>
-          <li>Universidad Complutense de Madrid. <em>Curvas paramétricas en el plano</em>. Disponible en:
+          <li>Complutense University of Madrid. <em>Parametric curves in the plane</em>. Available at:
             <a href="https://blogs.mat.ucm.es/matematicas-utiles/curvas-parametricas-en-el-plano/" target="_blank" rel="noopener noreferrer">
               https://blogs.mat.ucm.es/matematicas-utiles/curvas-parametricas-en-el-plano/
             </a>
           </li>
-          <li>Matusik, W. <em>Bézier Curves and Splines</em>. MIT OpenCourseWare, 6.837 Computer Graphics. Disponible en:
+          <li>Matusik, W. <em>Bézier Curves and Splines</em>. MIT OpenCourseWare, 6.837 Computer Graphics. Available at:
             <a href="https://ocw.mit.edu/courses/6-837-computer-graphics-fall-2012/aba8735cf2cf7c71ca5d29b46873309a_MIT6_837F12_Lec01.pdf" target="_blank" rel="noopener noreferrer">
               MIT OCW PDF
             </a>
           </li>
-          <li>University of New Mexico. <em>Bezier and Spline Curves and Surfaces</em>. Disponible en:
+          <li>University of New Mexico. <em>Bezier and Spline Curves and Surfaces</em>. Available at:
             <a href="https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_07.pdf" target="_blank" rel="noopener noreferrer">
               https://www.cs.unm.edu/~angel/CS534/LECTURES/CS534_07.pdf
             </a>
           </li>
-          <li>Universidad del País Vasco. <em>Parametrización y representación gráfica de superficies construidas</em>. Disponible en:
+          <li>University of the Basque Country. <em>Parameterization and graphical representation of constructed surfaces</em>. Available at:
             <a href="https://ocw.ehu.eus/pluginfile.php/56681/mod_resource/content/3/OCW2020Tema03_Material%20estudio.pdf" target="_blank" rel="noopener noreferrer">
               OCW EHU
             </a>
           </li>
-          <li>three.js documentation. <em>CubicBezierCurve3</em>. Disponible en:
+          <li>three.js documentation. <em>CubicBezierCurve3</em>. Available at:
             <a href="https://threejs.org/docs/pages/CubicBezierCurve3.html" target="_blank" rel="noopener noreferrer">
               https://threejs.org/docs/pages/CubicBezierCurve3.html
             </a>
@@ -358,11 +358,7 @@
     luzDireccional.position.set(5, 10, 7);
     scene.add(luzDireccional);
 
-    const axesHelper = new THREE.AxesHelper(5);
-    scene.add(axesHelper);
-
-    const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
-    scene.add(gridHelper);
+    // Se han eliminado las líneas que agregaban axesHelper y gridHelper
 
     let lineaCurva, lineaControl;
     const esferasControl = [];

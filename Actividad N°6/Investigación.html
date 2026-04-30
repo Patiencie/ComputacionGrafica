@@ -3,85 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investigación - Computación Gráfica</title>
+    <title>Actividad N°6 - Investigación | Computación Gráfica</title>
     <style>
+        /* Fondo oscuro profesional (estilo editor de código/diseño) */
         body {
             margin: 0;
             padding: 0;
-            /* Fondo degradado similar al anterior */
-            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+            background-color: #0e0e10; /* Gris casi negro */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
         }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Regresamos al contenedor llamativo */
-        .pdf-wrapper {
-            width: 85%;
-            height: 90vh;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* Importante para que el iframe respete las esquinas redondeadas */
-        }
-
-        /* Ajuste del botón de volver para que no lo tape el borde */
-        .back-btn {
+        /* Botón de volver minimalista (estilo GitHub/Vercel) */
+        .btn-back {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            color: rgba(255, 255, 255, 0.8);
+            top: 20px;
+            left: 20px;
+            color: #efeff1;
             text-decoration: none;
-            font-size: 11px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 6px 12px;
-            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.3s;
+            transition: all 0.2s ease;
             z-index: 100;
         }
 
-        .back-btn:hover {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Contenedor del PDF */
+        .pdf-viewport {
+            width: 90vw;
+            height: 92vh;
+            background: #18181b;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid #27272a;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Barra superior simulada para el visor */
+        .pdf-header {
+            background: #1f1f23;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #27272a;
+        }
+
+        .pdf-title {
+            color: #adadb8;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            /* Intentamos que el fondo del iframe sea blanco antes de cargar */
-            background-color: white; 
+            background-color: #ffffff; /* Fondo blanco para que el PDF no parpadee */
+        }
+
+        /* Estilo para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .pdf-viewport {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+            .btn-back {
+                top: 10px;
+                left: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <a href="../index.html" class="back-btn">← VOLVER</a>
+    <a href="../index.html" class="btn-back">← Volver al curso</a>
 
-    <div class="pdf-wrapper">
-        <!-- El truco del #view=FitH intenta que el PDF ocupe todo el ancho para tapar lo gris -->
-        <iframe src="Curva paramétrica y mallas poligonales.pdf#toolbar=1&view=FitH" type="application/pdf">
-            <p>Tu navegador no admite PDFs. <a href="Curva paramétrica y mallas poligonales.pdf">Descárgalo aquí</a>.</p>
+    <div class="pdf-viewport">
+        <div class="pdf-header">
+            <div class="pdf-title">Curvas Paramétricas y Mallas Poligonales - UTEA 2026</div>
+            <div style="display: flex; gap: 6px;">
+                <div style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f57;"></div>
+                <div style="width: 10px; height: 10px; border-radius: 50%; background: #febc2e;"></div>
+                <div style="width: 10px; height: 10px; border-radius: 50%; background: #28c840;"></div>
+            </div>
+        </div>
+        
+        <!-- El parámetro #toolbar=1 muestra las herramientas, #view=FitH ajusta el ancho -->
+        <iframe 
+            src="Curva paramétrica y mallas poligonales.pdf#toolbar=1&view=FitH" 
+            type="application/pdf">
+            <p>Tu navegador no admite PDFs. <a href="Curva paramétrica y mallas poligonales.pdf">Descargar archivo</a>.</p>
         </iframe>
     </div>
 

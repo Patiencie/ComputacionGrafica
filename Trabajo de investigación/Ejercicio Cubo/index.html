@@ -1,25 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Editor 3D Pro - Extrusión Reparada y GLB</title>
+    <title>Ejercicio - Editor 3D Pro</title>
     <style>
         body { margin: 0; overflow: hidden; font-family: 'Segoe UI', sans-serif; background: #0a0a12; }
-        #info {
-            position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.85);
-            color: white; padding: 12px 18px; border-radius: 8px; backdrop-filter: blur(5px);
-            z-index: 10; font-size: 14px; pointer-events: none; border-left: 4px solid #ff9800;
+        
+        /* PANEL SUPERIOR IZQUIERDO */
+        #sidebar {
+            position: absolute; top: 20px; left: 20px; background: rgba(20,20,30,0.9);
+            color: white; padding: 15px 20px; border-radius: 12px; backdrop-filter: blur(10px);
+            z-index: 10; font-size: 13px; pointer-events: none; border: 1px solid #444;
+            display: flex; flex-direction: column; gap: 8px; min-width: 200px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
         }
+        .sidebar-title { 
+            font-weight: bold; font-size: 15px; color: #ff9800; 
+            border-bottom: 1px solid #444; padding-bottom: 8px; margin-bottom: 4px;
+        }
+        .sidebar-desc { font-size: 11px; color: #aaa; margin-bottom: 8px; line-height: 1.4; }
+        .key-group { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;}
+        .key-group:last-child { border-bottom: none; padding-bottom: 0;}
+        .key-label { color: #ccc; font-size: 12px;}
+        .key-val { 
+            background: #2a2a35; padding: 3px 8px; border-radius: 6px; 
+            font-family: monospace; color: #00f5d4; font-size: 11px; border: 1px solid #555;
+        }
+
+        /* BARRA INFERIOR */
         #controls {
-            position: absolute; bottom: 20px; left: 20px; right: 20px;
-            background: rgba(30,30,40,0.95); backdrop-filter: blur(8px); padding: 12px;
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(30,30,40,0.95); backdrop-filter: blur(10px); padding: 15px;
             border-radius: 12px; display: flex; justify-content: center; gap: 10px;
-            flex-wrap: wrap; z-index: 20; pointer-events: auto; font-weight: bold; border: 1px solid #444;
+            flex-wrap: wrap; z-index: 20; pointer-events: auto; border: 1px solid #444; width: max-content;
         }
         button {
-            background: #ff9800; border: none; color: #1e1e2a; padding: 6px 16px;
+            background: #ff9800; border: none; color: #1e1e2a; padding: 8px 18px;
             border-radius: 40px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s;
         }
         button:hover:not(:disabled) { background: #ffb74d; transform: scale(1.05); }
@@ -28,38 +45,51 @@
         button.delete { background: #d32f2f; color: white; }
         button.scale { background: #2196f3; color: white; }
         button:disabled { background: #444; color: #888; cursor: not-allowed; transform: none; }
+        
+        .status-bar { width: 100%; display: flex; justify-content: center; gap: 15px; margin-bottom: 8px; }
         .status {
-            background: #1e1e2a; padding: 4px 12px; border-radius: 40px;
+            background: #1e1e2a; padding: 6px 14px; border-radius: 40px;
             font-family: monospace; color: #ff9800; font-size: 13px; border: 1px solid #333;
         }
         .status span { color: white; }
-        .instruccion { font-size: 11px; background: rgba(0,0,0,0.5); padding: 4px 12px; border-radius: 20px; width: 100%; text-align: center; margin-top: 5px; color: #ccc;}
+        
         .limit-warning {
             background: #aa3300; color: #ffcc88; padding: 4px 10px; border-radius: 20px;
-            font-size: 12px; font-weight: normal; display: none; position: absolute; top: 80px; left: 50%; transform: translateX(-50%); z-index: 50;
+            font-size: 12px; font-weight: normal; display: none; position: absolute; top: 20px; right: 20px; z-index: 50;
         }
     </style>
 </head>
 <body>
-    <div id="info">
-        🧊 <strong>Editor 3D Pro</strong> | Cubo Interactivo<br>
-        🖱️ Selecciona una cara azul. Haz clic en "Extruir" para generar la pieza turquesa.
+    
+    <div id="sidebar">
+        <div class="sidebar-title">🧊 Editor 3D Pro</div>
+        <div class="sidebar-desc">
+            1. Selecciona una cara azul.<br>
+            2. Usa los botones para extruir o limpiar.
+        </div>
+        <div class="key-group"><span class="key-label">🚀 Mover (X, Z)</span> <span class="key-val">W A S D</span></div>
+        <div class="key-group"><span class="key-label">🚀 Subir/Bajar</span> <span class="key-val">Q / E</span></div>
+        <div class="key-group"><span class="key-label">🔄 Rotar X</span> <span class="key-val">F / G</span></div>
+        <div class="key-group"><span class="key-label">🔄 Rotar Y</span> <span class="key-val">R / T</span></div>
+        <div class="key-group"><span class="key-label">🔄 Rotar Z</span> <span class="key-val">V / B</span></div>
+        <div class="key-group"><span class="key-label">📐 Escalar</span> <span class="key-val">Z / X</span></div>
     </div>
+
+    <div id="limitWarning" class="limit-warning">⚠️ Límite alcanzado</div>
+    
     <div id="controls">
-        <div class="status">📌 Cara: <span id="selectedFace">Ninguna</span></div>
-        <div class="status">📐 Tamaño: <span id="scaleVal">1.00</span></div>
-        <div class="status">💎 Extruidas: <span id="extrudedCount">0</span>/6</div>
+        <div class="status-bar">
+            <div class="status">📌 Cara: <span id="selectedFace">Ninguna</span></div>
+            <div class="status">📐 Tamaño: <span id="scaleVal">1.00</span></div>
+            <div class="status">💎 Extruidas: <span id="extrudedCount">0</span>/6</div>
+        </div>
         
         <button id="extrudeBtn" class="extrude" disabled>✨ Extruir</button>
         <button id="clearFaceBtn" class="delete" disabled>🗑️ Limpiar Cara</button>
         <button id="undoExtrudeBtn" class="delete" disabled>↩️ Deshacer</button>
         <button id="scaleDownBtn" class="scale">🔽 - Escalar</button>
         <button id="scaleUpBtn" class="scale">🔼 + Escalar</button>
-        <button id="resetBtn" class="reset">🔄 Reiniciar Todo</button>
-        
-        <div class="instruccion">
-            🔄 Rotar: R/T, F/G, V/B | 🚶 Mover: WASD, Q/E | 📐 Escalar: Z / X
-        </div>
+        <button id="resetBtn" class="reset">🔄 Reiniciar</button>
     </div>
 
     <script type="importmap">
@@ -146,6 +176,7 @@
                     
                     currentCube.geometry.computeVertexNormals();
                     
+                    // Posicionamos el cubo exactamente encima de la plataforma (Y=0.5)
                     currentCube.position.set(0, 0.5, 0);
                     currentCube.rotation.set(0, 0, 0);
                     currentCube.scale.set(1, 1, 1);
@@ -155,7 +186,7 @@
                     scene.add(currentCube);
 
                 } else if (child.name === 'Plano_subdividido' || child.name.includes('Plano')) {
-                    // SE CORRIGIÓ AQUÍ: Se añadió THREE.DoubleSide para que sea visible desde abajo
+                    // Plataforma visible desde abajo
                     child.material = new THREE.MeshStandardMaterial({ 
                         color: 0x444455, 
                         roughness: 0.8,
@@ -232,10 +263,9 @@
             if (keyState.KeyQ) { currentCube.position.y += mS; changedPos = true; }
             if (keyState.KeyE) { currentCube.position.y -= mS; changedPos = true; }
 
-            // SE CORRIGIÓ AQUÍ: Límites de Movimiento (para que no vaya al infinito ni baje del suelo)
+            // Límites de Movimiento (para que no vaya al infinito ni baje del suelo)
             if (changedPos) {
                 currentCube.position.x = THREE.MathUtils.clamp(currentCube.position.x, -8, 8);
-                // Límite Y mínimo 0.5 para que no se hunda bajo el suelo de la plataforma
                 currentCube.position.y = THREE.MathUtils.clamp(currentCube.position.y, 0.5, 8);
                 currentCube.position.z = THREE.MathUtils.clamp(currentCube.position.z, -8, 8);
             }
@@ -290,7 +320,7 @@
             const depth = 0.6;
             const prism = new THREE.Mesh(
                 new THREE.BoxGeometry(1, 1, depth), 
-                new THREE.MeshStandardMaterial({ color: 0x00f5d4, roughness: 0.3 }) // Color Turquesa brillante
+                new THREE.MeshStandardMaterial({ color: 0x00f5d4, roughness: 0.3 }) 
             );
             
             prism.position.copy(selectedFaceLocal.center.clone().add(selectedFaceLocal.normal.clone().multiplyScalar(depth / 2)));
@@ -347,5 +377,3 @@
     </script>
 </body>
 </html>
-
-http://googleusercontent.com/immersive_entry_chip/0
